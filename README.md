@@ -3,7 +3,7 @@ Solutions to help schools and small companies solve the problem of employees and
 
 ![My Image](https://cloudulu.com/wp-content/uploads/2023/09/log.png)
 
-password: admin12345
+Admin password for django back end: admin12345
 
 * Run the application
 
