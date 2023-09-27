@@ -1,0 +1,98 @@
+{% extends "customer/base.html" %}
+
+{% block content %}
+
+<!--<div class="container mb-5">
+        <div class="row justify-content-center mt-5 ">
+            <div class="col-md-8 col-sm-12 offset-md-1 p-4 text-center ">
+                <h1>Online Food Delivery Service</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-1 ">
+            <div class="card shadow-lg col-md-5 col-sm-12 offset-md-1 p-4 text-center">
+                <h2>Place Order</h2>
+                <a href="{% url 'order' %}" class="btn btn-outline-black">Order Now</a>
+            </div>
+        </div>
+    </div>-->
+
+<!-- Jumbotron 
+  <div class="bg-primary text-white py-5">
+    <div class="container py-5">
+      <h1>
+        Best products & <br />
+        brands in our store
+      </h1>
+      <p>
+        Trendy Products, Factory Prices, Excellent Service
+      </p>
+      
+      <button type="button" class="btn shadow-0 pt-2 ">
+        <a href="{% url 'order' %}" class="btn btn-outline-light">Order Now</a>
+      </button>
+    </div>
+  </div>
+  Jumbotron -->
+
+<header>
+    <!-- Intro settings -->
+    <style>
+        .gradient-custom {
+            /* fallback for old browsers */
+            background: #0d3e68;
+
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: -webkit-linear-gradient(to bottom, rgba(13, 62, 104, 1), rgba(242, 41, 91, 1));
+
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: linear-gradient(to bottom, rgba(13, 62, 104, 1), rgba(242, 41, 91, 1))
+        }
+
+        h1.cutout {
+            background: white;
+            color: black;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            mix-blend-mode: screen; // The magic
+          } 
+        
+        .img_style{
+            background-image: url('https://cloudulu.com/wp-content/uploads/2023/09/log.png');
+            background-position:85%; 
+            position: relative;
+            overflow: hidden!important;
+            background-repeat: no-repeat;
+            background-size: initial;
+            padding: 12rem !important;
+
+        }
+          
+        /* responsive mode for img_style*/ 
+        @media (max-width: 768px) {
+            .img_style{
+                background-image: url('https://cloudulu.com/wp-content/uploads/2023/09/log.png'); 
+                position: relative;
+                background-repeat: no-repeat;
+                background-size: 45vh;
+                padding: 8rem!important;
+            
+            }
+        }       
+
+    </style>
+    <!-- hero section , background color-->
+    <div class="gradient-custom" style="height: 100vh">
+        <div class="container py-5 text-light text-center">
+            <h1 class="cutout d-inline-block p-3">HELLO WORLD
+            </h1>
+            <div class="img_style">
+            </div>
+        </div>
+        <h2 class="text-center text-light text-uppercase" style="font-family: 'Montserrat', sans-serif;font-weight:300">Eco-Friendly leftovers, Flavor-Packed, and Ready to Go!</h2>
+
+        <div class="d-grid gap-2 m-10 pe-5 ps-5">
+            <a href="#" class="btn btn-outline-light rounded-0" type="button" style="font-size: 26px; font-weight:300">ORDER YOUR LUNCH NOW</a>
+        </div>
+
+    </div>
+    {% endblock %}
