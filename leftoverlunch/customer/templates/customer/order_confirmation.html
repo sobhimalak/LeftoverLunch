@@ -1,0 +1,23 @@
+{% extends 'customer/base.html' %}
+
+{% block content %}
+<div class="container mb-5 col-lg-6">
+    <div class="card shadow-lg row justify-content-center mt-5">
+        <div class="card-body p-5 col-sm-12 p-4 text-center">
+            <h1>Order Submitted!</h1>
+            <p>You should receive a confirmation email soon.</p>
+            <a class='btn btn-outline-black' href="{% url 'index' %}">Go to the homepage</a>
+        </div>
+    </div>
+
+    <div class="card shadow-lg row justify-content-center mt-5">
+        <div class="col-sm-12 text-center p-5">
+            <h3 class="pb-3 ">Order Summary:</h3>
+            {% for item in items %}
+                <p>{{ item.name }} <span class="pl-3">{{ item.price }}</span></p>
+            {% endfor %}
+            <p class="font-weight-bold pt-4">Total: {{ price }}</p>
+        </div>
+    </div>
+</div>
+{% endblock content %}
