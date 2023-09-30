@@ -14,9 +14,9 @@
         <div class="col-sm-12 text-center p-5">
             <h3 class="pb-3 ">Order Summary:</h3>
             {% for item in items %}
-                <p>{{ item.name }} <span class="pl-3">{{ item.price }}</span></p>
-            {% endfor %}
-            <p class="font-weight-bold pt-4">Total: {{ price }}</p>
+                <p>{{ item.name }} <span class="pl-3">{{ item.price }} kr</span></p>
+            {% endfor %}    
+            <p class="font-weight-bold pt-4">Total: {{ price }} kr</p>
         </div>
     </div>
 </div>

@@ -1,4 +1,5 @@
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-inverse text-uppercase">
     <div class="container-fluid">
       <a class="navbar-brand" href="{% url 'index' %}">LEFTOVER</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,9 +8,22 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <a class="nav-link active" aria-current="page" href="#">Home</a>
-          <a class="nav-link" href="{% url 'about' %}">About</a>
+          <a class="nav-link" href="#{% url 'about' %}">About</a>
           <a class="nav-link" href="{% url 'order' %}">Place an Order</a>
         </div>
       </div>
+      <div class="d-flex align-items-center">
+        <!-- Cart -->
+              <div class="cart">
+                  <div class="cart_container d-flex flex-row align-items-center justify-content-end">
+                      <div class="cart_icon"><i class="bi bi-bag text-light" style="font-size: 1.5rem;"></i>
+                          <div class="cart_count"><span></span></div>
+                      </div>
+                      <div class="cart_content">
+                          <div class="cart_price"></div>
+                      </div>
+                  </div>
+              </div>
+    </div>
     </div>
   </nav>
