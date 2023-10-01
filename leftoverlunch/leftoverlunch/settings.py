@@ -120,7 +120,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATIC_ROOT = 'var/www/leftoverlunch/static'
+STATIC_ROOT = 'var/www/sobione/static'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

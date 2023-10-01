@@ -3,9 +3,11 @@ Solutions to help schools and small companies solve the problem of employees and
 
 ![My Image](https://cloudulu.com/wp-content/uploads/2023/09/log.png)
 
+for the admin page:
+User: admin
 password: admin12345
 
-* Run the application
+* To Run the application
 
 1. activate the virtual environment
 Create a virtual environment
@@ -16,5 +18,6 @@ Activate the virtual environment
 
 3. install the requirements
 ```pip install -r requirements.txt```
-python manage.py runserver
-```
+
+4. run the application
+```python manage.py runserver```
