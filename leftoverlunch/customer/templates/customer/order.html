@@ -13,7 +13,11 @@
       {% for app in appetizers %}
         <div class="card bg-transparent mt-5 " style="width: 25rem;">
           <img src="{{ app.image.url }}" class="card-img-top" alt="...">
-          <div class="badge badge-light text-dark rounded-8 m-3 position-absolute">3 left</div>
+          {% if menu_item.is_out_of_stock %}
+              <p>Out of Stock</p>
+          {% else %}
+          <div class="badge badge-light text-dark rounded-8 m-3 position-absolute">{{ app.amount_left }} left</div>
+          {% endif %}
           <div class="card-body bg-white">
             <div class="d-flex flex-row justify-content-between mb-0">
               <h5 class="text-capitalize">{{ app.name }}</h5>
@@ -21,14 +25,13 @@
             </div>
             <hr class="mt-0">
             <div class="d-flex flex-row justify-content-between py-3">
-              <div class="d-flex flex-column"><span class="text-muted"><i class="bi bi-clock"></i> Collect: 11:00 -
-                  12:00</span>
+              <div class="d-flex flex-column"><span class="text-muted"><i class="bi bi-clock"></i> Collect : {{ app.collect_time_start }} - {{ app.collect_time_end }}</span>
                 <div class="d-flex mt-3 ">
                   <h5 class="badge badge-light text-dark rounded-8 mb-3 me-2">Meat</h5>
                   <h5 class="badge badge-light text-dark rounded-8 mb-3">Veg</h5>
                 </div>
               </div>
-              <div class="d-flex flex-column"><small class="badge btn_store text-light rounded-8 mb-2">Today</small>
+              <div class="d-flex flex-column"><small class="badge btn_store text-light rounded-8 mb-2">{{ app.collect_day }}</small>
               </div>
             </div>
             <p class="card-text">{{ app.description }}</p>

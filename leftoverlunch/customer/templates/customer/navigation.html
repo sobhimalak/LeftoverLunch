@@ -3,29 +3,47 @@
     <div class="container-fluid">
       <!--<a class="navbar-brand" href="{% url 'index' %}">LEFTOVER</a>-->
       {% load static %}
-      <a href="{% url 'index' %}"><img  src="https://camo.githubusercontent.com/a0fd8366fbe4d266fecccc5d71a529c42914a30d16ab325e6f16d21ba758f383/68747470733a2f2f636c6f7564756c752e636f6d2f77702d636f6e74656e742f75706c6f6164732f323032332f30392f6c6f672e706e67" height="35" loading="lazy" /></a>
-
+      <div class="justify-content-center ">
+        <a href="{% url 'index' %}">
+          <img src="https://camo.githubusercontent.com/a0fd8366fbe4d266fecccc5d71a529c42914a30d16ab325e6f16d21ba758f383/68747470733a2f2f636c6f7564756c752e636f6d2f77702d636f6e74656e742f75706c6f6164732f323032332f30392f6c6f672e706e67" height="35" loading="lazy" /></a>
+      </div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link" href="#{% url 'about' %}">About</a>
-          <a class="nav-link" href="{% url 'order' %}">Place an Order</a>
+          <a class="nav-link text-light" href="#{% url 'about' %}">About</a>
+          <a class="nav-link text-light" href="{% url 'order' %}">Place an Order</a>
         </div>
       </div>
       <div class="d-flex align-items-center">
+         <!-- LogOut & LogIn Icon -->
+    {% if current_user.is_authenticated %}
+    <a  class="text-reset align-self-end" href="{% url 'login' %}" style="text-decoration: none;" 
+    data-toggle="tooltip" data-placement="bottom">
+    </a>
+    <a  class="text-reset me-3" href="#" style="text-decoration: none;" 
+    data-toggle="tooltip" data-placement="bottom" title="Log Out">
+    <i class="bi bi-person text-light" style="font-size: 1.5rem;">logout</i>
+
+    </a>
+    {% else %}
+    <a  class="text-reset me-3" href="{% url 'login' %}" 
+    data-toggle="tooltip" data-placement="bottom" title="Log In">
+    <i class="bi bi-person text-light text-lowercase " style="font-size: 1.5em"></i>
+    </a>
+    {% endif %}
         <!-- Cart -->
               <div class="cart">
                   <div class="cart_container d-flex flex-row align-items-center justify-content-end">
-                      <div class="cart_icon"><i class="bi bi-bag text-light" style="font-size: 1.5rem;"></i>
+                      <div class="cart_icon"><i class="bi bi-bag text-light" style="font-size: 1.5em;"></i>
                           <div class="cart_count"><span></span></div>
                       </div>
                       <div class="cart_content">
                           <div class="cart_price"></div>
                       </div>
                   </div>
-              </div>
+              </div> 
     </div>
     </div>
   </nav>
