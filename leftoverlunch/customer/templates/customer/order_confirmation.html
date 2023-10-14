@@ -1,12 +1,12 @@
 {% extends 'customer/base.html' %}
 
 {% block content %}
-<div class="container mb-5 col-lg-6">
+<div class="container mb-5 col-lg-6 py-5">
     <div class="card shadow-lg row justify-content-center mt-5">
         <div class="card-body p-5 col-sm-12 p-4 text-center">
-            <h1>Order Submitted!</h1>
+            <h1>Order Submited!</h1>
             <p>You should receive a confirmation email soon.</p>
-            <a class='btn btn-outline-black' href="{% url 'index' %}">Go to the homepage</a>
+            <a class='btn btn-dark btn_store flex-shrink-0  ms-2 rounded-8' href="{% url 'index' %}">Go to the homepage</a>
         </div>
     </div>
 
@@ -15,9 +15,10 @@
             <h3 class="pb-3 ">Order Summary:</h3>
             {% for item in items %}
                 <p>{{ item.name }} <span class="pl-3">{{ item.price }} kr</span></p>
-            {% endfor %}    
+              {% endfor %}
             <p class="font-weight-bold pt-4">Total: {{ price }} kr</p>
         </div>
     </div>
 </div>
+
 {% endblock content %}

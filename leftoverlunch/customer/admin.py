@@ -5,3 +5,6 @@ from .models import MenuItem, Category, OrderModel
 admin.site.register(MenuItem)
 admin.site.register(Category)
 admin.site.register(OrderModel)
+
+admin.site.site_header = 'Leftover Lunch Admin'
+admin.site.site_title = 'Custom Admin Title'
