@@ -7,6 +7,10 @@ for the admin page:
 User: admin
 password: admin12345
 
+for the mysql database:
+User: admin
+password: admin12345
+
 * To Run the application
 
 1. activate the virtual environment
