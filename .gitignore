@@ -56,6 +56,3 @@ __pycache__/
 # Ignore dependency directories
 node_modules/
 env/
-
-# Ignore local configurations
-local_settings.py
