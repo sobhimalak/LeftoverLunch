@@ -4,6 +4,7 @@ from .models import MenuItem, Category, OrderModel
 from django.http import Http404
 
 
+
 class Index(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'customer/index.html')
@@ -21,11 +22,15 @@ class Login(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'customer/login.html')
 
+class Cart(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'customer/cart.html')
 
-class Order(View):
+
+class Store(View):
     def get(self, request, *args, **kwargs):
         # get every item from each category
-        appetizers = MenuItem.objects.filter(category__name__contains='Appetizer')
+        appetizers = MenuItem.objects.filter(category__name__contains='Appetizer',stock__gt=0)
         entres = MenuItem.objects.filter(category__name__contains='Entre', stock__gt=0)
         desserts = MenuItem.objects.filter(category__name__contains='Dessert', stock__gt=0)
         drinks = MenuItem.objects.filter(category__name__contains='Drink', stock__gt=0)
@@ -39,7 +44,7 @@ class Order(View):
         }
 
         # render the template
-        return render(request, 'customer/order.html', context)
+        return render(request, 'customer/store.html', context)
 
     def post(self, request, *args, **kwargs):
         order_items = {

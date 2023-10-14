@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import pymysql
+pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -83,6 +85,16 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'sobione$default',  # Name of your MySQL database
+#         'USER': 'sobione',  # Your MySQL database username
+#         'PASSWORD': 'admin12345',  # Your MySQL database password
+#         'HOST': 'sobione.mysql.pythonanywhere-services.com',  # Change it to the appropriate MySQL server host if necessary
+#         'PORT': '3306',  # MySQL server port (default is usually 3306)
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

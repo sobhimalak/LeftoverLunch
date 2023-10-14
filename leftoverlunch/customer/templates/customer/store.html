@@ -12,7 +12,7 @@
       {% csrf_token %}
       <!---==============  ==================-->
       {% for app in appetizers %}
-        <div class="card bg-transparent mt-5 " style="width: 25rem;">
+        <div class="card bg-transparent border-0 mt-5 " style="width: 25rem;">
           <img src="{{ app.image.url }}" class="card-img-top" alt="...">
           {% if app.is_out_of_stock %}
           <div class="badge badge-black rounded-8 m-3 position-absolute" style="background:rgb(183, 51, 51);" >{{ app.stock }} left</div>
@@ -76,7 +76,7 @@
       {% csrf_token %}
       <!---==============  ==================-->
       {% for entre in entres %}
-        <div class="card bg-transparent mt-5 " style="width: 25rem;">
+        <div class="card bg-transparent border-0 mt-5 " style="width: 25rem;">
           <img src="{{ entre.image.url }}" class="card-img-top" alt="...">
           {% if entre.is_out_of_stock %}
           <div class="badge badge-black rounded-8 m-3 position-absolute" style="background:rgb(183, 51, 51);" >{{ entre.stock }} left</div>
