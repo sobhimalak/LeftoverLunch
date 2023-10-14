@@ -14,18 +14,19 @@ class MenuItem(models.Model):
                     for hour in range(11, 24)  # Hours from 11 to 23 (24-hour format)
                     for minute in range(0, 60, 15)]  # Minutes with a step of 15 minutes (0, 15, 30, 45)
     def is_out_of_stock(self):
-        return self.amount_left == 0
+        return self.stock == 0
     
    
     name = models.CharField(max_length=100)
-    collect_day = models.CharField(max_length=50, choices=DAY_CHOICES, default=False)
+    collect_day = models.CharField(max_length=50, choices=DAY_CHOICES, default=TODAY)
     collect_time_start = models.CharField(max_length=5, choices=TIME_CHOICES, default='11:00')
     collect_time_end = models.CharField(max_length=5, choices=TIME_CHOICES, default='12:00')
-    amount_left = models.IntegerField(default=0)
-    description = models.TextField()
+    stock = models.PositiveIntegerField(default=0)
+    description = models.TextField(max_length=200)
     image = models.ImageField(upload_to='menu_images/')
     price = models.DecimalField(max_digits=5, decimal_places=2)
-    category = models.ManyToManyField('Category', related_name='item')
+    category = models.ManyToManyField('Category', related_name='items')
+        
 
     def __str__(self):
         return self.name

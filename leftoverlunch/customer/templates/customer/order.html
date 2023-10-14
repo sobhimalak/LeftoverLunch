@@ -3,9 +3,10 @@
 
 <form method="POST">
   <div class="container py-5 mt-5">
-    <header class="section-header text-center ">
-      <span class="display-5 text-uppercase">Recomended for you</span>
-      <p>Select From Our Products</p>
+
+    <!---============== Entre ==================-->
+    <header class="section-header text-center">
+      <span class="display-5 text-uppercase">Appetizers</span>
     </header>
     <div class="row col-auto justify-content-center ">
       {% csrf_token %}
@@ -13,10 +14,14 @@
       {% for app in appetizers %}
         <div class="card bg-transparent mt-5 " style="width: 25rem;">
           <img src="{{ app.image.url }}" class="card-img-top" alt="...">
-          {% if menu_item.is_out_of_stock %}
-              <p>Out of Stock</p>
+          {% if app.is_out_of_stock %}
+          <div class="badge badge-black rounded-8 m-3 position-absolute" style="background:rgb(183, 51, 51);" >{{ app.stock }} left</div>
           {% else %}
-          <div class="badge badge-light text-dark rounded-8 m-3 position-absolute">{{ app.amount_left }} left</div>
+            {% if entre.stock == 0 %}
+              <p class="text-warning">Limited Stock</p>
+            {% else %}
+          <div class="badge badge-light text-dark rounded-8 m-3 position-absolute">{{ app.stock }} left</div>
+          {% endif %}
           {% endif %}
           <div class="card-body bg-white">
             <div class="d-flex flex-row justify-content-between mb-0">
@@ -26,6 +31,8 @@
             <hr class="mt-0">
             <div class="d-flex flex-row justify-content-between py-3">
               <div class="d-flex flex-column"><span class="text-muted"><i class="bi bi-clock"></i> Collect : {{ app.collect_time_start }} - {{ app.collect_time_end }}</span>
+                
+                <span class="text-muted"><i class="bi bi-geo-alt"></i><a href="url" class="text-muted link-dark"> Restaurant Husman</a></span>
                 <div class="d-flex mt-3 ">
                   <h5 class="badge badge-light text-dark rounded-8 mb-3 me-2">Meat</h5>
                   <h5 class="badge badge-light text-dark rounded-8 mb-3">Veg</h5>
@@ -35,57 +42,99 @@
               </div>
             </div>
             <p class="card-text">{{ app.description }}</p>
+            
 
             <div style="text-align: end;">
               <!---======= Details btn ========-->
-              <a href="#" class="btn btn-dark btn_store flex-shrink-0 rounded-8">
+              <a href="{% url 'single_page' %}" class="btn btn-dark btn_store flex-shrink-0 rounded-8">
                 <i class="bi bi-info-square"></i>
               </a>
-              <!---======= ADD TO CART btn ========-->
+          
+                <!---======= ADD TO CART btn ========-->
               <button type="submit" name="items[]" value="{{ app.pk }}"
-                class="btn btn-dark btn_store flex-shrink-0  ms-2 rounded-8">
-                <i class="bi bi-bag-plus"></i> Reserve</button>
+              class="btn btn-dark btn_store flex-shrink-0  ms-2 rounded-8 {% if app.is_out_of_stock %}disabled{% endif %}">
+              <i class="bi bi-bag-plus"></i> Reserve</button>
             </div>
           </div>
         </div>
-
         {% endfor %}
-
       </div>
     </div>
-  </div>
+    </div>
 
 
 
 
 
+  <div class="container py-5 mt-5">
 
-
-
-
-
-
-    <div class="pt-5">
+    <!---============== Entre ==================-->
+    <header class="section-header text-center">
+      <span class="display-5 text-uppercase">Entre</span>
+    </header>
+    <div class="row col-auto justify-content-center ">
+      {% csrf_token %}
+      <!---==============  ==================-->
       {% for entre in entres %}
-      <div class="row mt-4">
-        <div class="col-md-2 col-sm-12">
-          <h2>{{ entre.name }}</h2>
-          <img class="rounded" src="{{ entre.image.url }}" width="150" height="100" />
-        </div>
-        <div class="col-md-8 col-sm-12">
-          <div class="d-flex flex-row">
-            <div class="form-group form-check">
-              <input type="checkbox" name="items[]" class="form-check-input" value="{{ entre.pk }}" />
-              <label class="form-check-label">{{ entre.name }} </label>
+        <div class="card bg-transparent mt-5 " style="width: 25rem;">
+          <img src="{{ entre.image.url }}" class="card-img-top" alt="...">
+          {% if entre.is_out_of_stock %}
+          <div class="badge badge-black rounded-8 m-3 position-absolute" style="background:rgb(183, 51, 51);" >{{ entre.stock }} left</div>
+          {% else %}
+            {% if entre.stock == 0 %}
+              <p class="text-warning">Limited Stock</p>
+            {% else %}
+          <div class="badge badge-light text-dark rounded-8 m-3 position-absolute">{{ entre.stock }} left</div>
+          {% endif %}
+          {% endif %}
+          <div class="card-body bg-white">
+            <div class="d-flex flex-row justify-content-between mb-0">
+              <h5 class="text-capitalize">{{ entre.name }}</h5>
+              <h6>{{ entre.price }} kr</h6>
             </div>
-            <p class="font-weight-bold pl-5">{{ entre.price }} kr</p>
+            <hr class="mt-0">
+            <div class="d-flex flex-row justify-content-between py-3">
+              <div class="d-flex flex-column"><span class="text-muted"><i class="bi bi-clock"></i> Collect : {{ entre.collect_time_start }} - {{ entre.collect_time_end }}</span>
+                
+                <span class="text-muted"><i class="bi bi-geo-alt"></i><a href="url" class="text-muted link-dark"> Restaurant Husman</a></span>
+                <div class="d-flex mt-3 ">
+                  <h5 class="badge badge-light text-dark rounded-8 mb-3 me-2">Meat</h5>
+                  <h5 class="badge badge-light text-dark rounded-8 mb-3">Veg</h5>
+                </div>
+              </div>
+              <div class="d-flex flex-column"><small class="badge btn_store text-light rounded-8 mb-2">{{ entre.collect_day }}</small>
+              </div>
+            </div>
+            <p class="card-text">{{ entre.description }}</p>
+            
+
+            <div style="text-align: end;">
+              <!---======= Details btn ========-->
+              <a href="{% url 'single_page' %}" class="btn btn-dark btn_store flex-shrink-0 rounded-8">
+                <i class="bi bi-info-square"></i>
+              </a>
+          
+                <!---======= ADD TO CART btn ========-->
+              <button type="submit" name="items[]" value="{{ entre.pk }}"
+              class="btn btn-dark btn_store flex-shrink-0  ms-2 rounded-8 {% if entre.is_out_of_stock %}disabled{% endif %}">
+              <i class="bi bi-bag-plus"></i> Reserve</button>
+            </div>
           </div>
-          <p>{{ entre.description }}</p>
         </div>
+        {% endfor %}
       </div>
-      <hr />
-      {% endfor %}
     </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
     <div class="pt-5">
       {% for dessert in desserts %}
       <div class="row mt-4">
@@ -134,8 +183,6 @@
 
 
 
-
-
-
-
 {% endblock content %}
+
+

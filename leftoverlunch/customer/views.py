@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 from .models import MenuItem, Category, OrderModel
+from django.http import Http404
 
 
 class Index(View):
@@ -12,6 +13,10 @@ class About(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'customer/about.html')
 
+class single_page(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'customer/single_page.html')
+
 class Login(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'customer/login.html')
@@ -20,11 +25,10 @@ class Login(View):
 class Order(View):
     def get(self, request, *args, **kwargs):
         # get every item from each category
-        appetizers = MenuItem.objects.filter(
-            category__name__contains='Appetizer')
-        entres = MenuItem.objects.filter(category__name__contains='Entre')
-        desserts = MenuItem.objects.filter(category__name__contains='Dessert')
-        drinks = MenuItem.objects.filter(category__name__contains='Drink')
+        appetizers = MenuItem.objects.filter(category__name__contains='Appetizer')
+        entres = MenuItem.objects.filter(category__name__contains='Entre', stock__gt=0)
+        desserts = MenuItem.objects.filter(category__name__contains='Dessert', stock__gt=0)
+        drinks = MenuItem.objects.filter(category__name__contains='Drink', stock__gt=0)
         
         # pass into context
         context = {
@@ -36,7 +40,7 @@ class Order(View):
 
         # render the template
         return render(request, 'customer/order.html', context)
-    
+
     def post(self, request, *args, **kwargs):
         order_items = {
             'items': []
@@ -44,30 +48,36 @@ class Order(View):
 
         items = request.POST.getlist('items[]')
 
-        for item in items:
-            menu_item = MenuItem.objects.get(pk__contains=int(item))
-            item_data = {
-                'id': menu_item.pk,
-                'name': menu_item.name,
-                'price': menu_item.price
-            }
+        for item_id in items:
+            try:
+                menu_item = MenuItem.objects.get(pk=int(item_id), stock__gt=0)
+                item_data = {
+                    'id': menu_item.pk,
+                    'name': menu_item.name,
+                    'price': menu_item.price
+                }
 
-            order_items['items'].append(item_data)
+                order_items['items'].append(item_data)
 
-            price = 0
-            item_ids = []
+                # Deduct 1 from the available stock after adding to the order
+                menu_item.stock -= 1
+                menu_item.save()
 
-            for item in order_items['items']:
-                price += item['price']
-                item_ids.append(item['id'])
+            except MenuItem.DoesNotExist:
+                # Handle the case where the item does not exist or is out of stock
+                raise Http404("Item not found or out of stock")
 
-            order = OrderModel.objects.create(price=price)
-            order.items.add(*item_ids)
+        # Calculate total price and item IDs outside the loop
+        price = sum(item['price'] for item in order_items['items'])
+        item_ids = [item['id'] for item in order_items['items']]
 
-            context = {
-                'items': order_items['items'],
-                'price': price
-            }
-            
+        # Create an order and add items to it
+        order = OrderModel.objects.create(price=price)
+        order.items.add(*item_ids)
 
-            return render(request, 'customer/order_confirmation.html', context)
+        context = {
+            'items': order_items['items'],
+            'price': price
+        }
+
+        return render(request, 'customer/order_confirmation.html', context)
