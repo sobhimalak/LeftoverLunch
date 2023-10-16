@@ -22,6 +22,7 @@ class MenuItem(models.Model):
     collect_time_start = models.CharField(max_length=5, choices=TIME_CHOICES, default='11:00')
     collect_time_end = models.CharField(max_length=5, choices=TIME_CHOICES, default='12:00')
     stock = models.PositiveIntegerField(default=0)
+    allergies = models.ManyToManyField('Allergies',related_name='items')
     description = models.TextField(max_length=200)
     image = models.ImageField(upload_to='menu_images/')
     price = models.DecimalField(max_digits=5, decimal_places=2)
@@ -48,4 +49,9 @@ class OrderModel(models.Model):
     def __str__(self):
         return f'Order: {self.created_on.strftime("%b %d %I: %M %p")}'
 
-    
+
+class Allergies(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
