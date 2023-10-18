@@ -4,5 +4,4 @@
 /~$Mall_Iterationsrapport_The_Leftovers.ods
 
 *.pyc
-__pycache__/
-
+leftoverlunch/leftoverlunch/__pycache__/
