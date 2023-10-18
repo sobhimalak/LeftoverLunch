@@ -25,3 +25,7 @@ Activate the virtual environment
 
 4. run the application
 ```python manage.py runserver```
+
+5. This is how you do migrations    
+```python manage.py makemigrations```
+```python manage.py migrate```

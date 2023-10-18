@@ -56,17 +56,6 @@
               <button type="submit" name="items[]" value="{{ all_the_item.pk }}"
               class="btn btn-dark btn_store flex-shrink-0  ms-2 rounded-8 {% if all_the_item.is_out_of_stock %}disabled{% endif %}">
               <i class="bi bi-bag-plus"></i> test</button> 
-
-              <form method="post" action="">
-                {% csrf_token %}
-                <input type="hidden" name="item_id" value="{{ all_the_item.pk }}">
-                <button class="btn btn-dark btn_store flex-shrink-0  ms-2 rounded-8 {% if all_the_item.is_out_of_stock %}disabled{% endif %}" type="submit"><i class="bi bi-bag-plus"></i> Reserve</button>
-            </form>
-            <form method="post" action="{% url 'order' %}">
-              {% csrf_token %}
-              <input type="hidden" name="item_id" value="{{ item.pk }}">
-              <button type="submit">Reserveing</button>
-          </form>
             </div>
           </div>
         </div>
