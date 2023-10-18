@@ -1,24 +1,140 @@
 {% extends 'customer/base.html' %}
 
 {% block content %}
-<div class="container mb-5 col-lg-6 py-5">
-    <div class="card shadow-lg row justify-content-center mt-5">
-        <div class="card-body p-5 col-sm-12 p-4 text-center">
-            <h1>Order Submited!</h1>
-            <p>You should receive a confirmation email soon.</p>
-            <a class='btn btn-dark btn_store flex-shrink-0  ms-2 rounded-8' href="{% url 'index' %}">Go to the homepage</a>
-        </div>
-    </div>
+<div class="container pt-5">
+    <div class="row pt-5">
+        <h1 class='pb-3'>Shopping Cart</h1>
+        <div class="col-xl-9">
+            <div class="card border shadow-none">
+                <div class="card-body ">
+                    <div class="d-flex row border-bottom pb-3">
+                        <div class="d-flex flex-row mb-3 justify-content-between">
+                            
+                                {% for item in items %}
+                                <p class='font-size:12px'><a href="#" class="text-dark">{{ item.name }}</a></p>
+                                <p class="text-muted mb-0 ">
+                                    <i class="bi bi-star text-warning" style="font-size: 0.7rem"></i>
+                                    <i class="bi bi-star text-warning" style="font-size: 0.7rem"></i>
+                                    <i class="bi bi-star text-warning" style="font-size: 0.7rem"></i>
+                                    <i class="bi bi-star text-warning" style="font-size: 0.7rem"></i>
+                                    <i class="bi bi-star-half text-warning" style="font-size: 0.7rem"></i>
+                                </p>
+                                 <!-- <p class="mb-0 mt-1">color<span class="fw-medium"></span></p> -->
+                            
+                            <div class="d-flex flex-row mb-3">
+                                <div>
+                                    <div class="d-inline-flex">
+                                        <select class="form-select form-select-sm w-xl">
+                                            <option value="1">1</option>
+                                            <option value="2" selected="">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row mb-3">
+                                <div>
+                                    <h6 class="mb-0 mt-2"><span class="text-muted me-2"></span>{{ item.price }} kr</h6>
+                                                {% endfor %}
+                                </div>
+                            </div>
+                            <div class="flex-shrink-0 ms-2 d-flex flex-row">
+                                <ul class="list-inline mb-0 font-size-16">
+                                    <li class="list-inline-item">
+                                        <a href="#" class="text-muted px-1">
+                                            <i class="bi bi-trash text-black"></i>
+                                        </a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#" class="text-muted px-1">
+                                            <i class="bi bi-heart text-danger"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
-    <div class="card shadow-lg row justify-content-center mt-5">
-        <div class="col-sm-12 text-center p-5">
-            <h3 class="pb-3 ">Order Summary:</h3>
-            {% for item in items %}
-                <p>{{ item.name }} <span class="pl-3">{{ item.price }} kr</span></p>
-              {% endfor %}
-            <p class="font-weight-bold pt-4">Total: {{ price }} kr</p>
+                    <div>
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <div class="mt-3 float-end">
+                                    <p class="text-muted mb-2">Total: </p>
+                                    <h5>{{ price }} kr</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- end card -->
+
+            <div class="row my-4">
+                <div class="col-sm-6">
+                    <a href="{% url 'index' %}" class="btn btn-light btn_checkout flex-shrink-0 ms-2 shadow-0 border-0">
+                        <i class="bi bi-arrow-left me-1"></i> Continue Shopping </a>
+                </div> <!-- end col -->
+                <div class="col-sm-6">
+                    <div class="text-sm-end mt-2 mt-sm-0">
+                        <button type="submit" name="items[]" value="{{ all_the_item.pk }}"
+                      class="btn btn-light btn_checkout flex-shrink-0  ms-2 shadow-0 border-0">
+                      <i class="bi bi-bag-plus"></i> Checkout</button>
+                    </div>
+                    
+
+                </div> <!-- end col -->
+            </div> <!-- end row-->
         </div>
+
+        <!-- Order Summary The right card-->
+        <div class="col-xl-3">
+            <div class="mt-5 mt-lg-0">
+                <div class="card border shadow-none">
+                    <div class="card-header bg-transparent border-bottom py-3 px-4">
+                        <h5 class="font-size-16 mb-0">Order Summary <span class="float-end">#MN0124</span></h5>
+                    </div>
+                    
+                    <div class="card-body p-4 pt-2">
+
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td>Sub Total :</td>
+                                        <td class="text-end">780 kr</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Saved : </td>
+                                        <td class="text-end">- 78 kr</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>Estimated Tax : </td>
+                                        <td class="text-end">18.20 kr</td>
+                                    </tr>
+                                    <tr class="bg-light">
+                                        <th>Total :</th>
+                                        <td class="text-end">
+                                            <span class="fw-bold">745.2 kr</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end table-responsive -->
+                    </div>
+                </div>
+            </div>
+        </div> <!-- End of Order Summary The right card-->
     </div>
+    <!-- end row -->
 </div>
 
 {% endblock content %}

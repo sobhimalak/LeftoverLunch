@@ -34,7 +34,7 @@
                 <span class="text-muted"><i class="bi bi-geo-alt"></i><a href="url" class="text-muted link-dark"> Restaurant Husman</a></span>
                 <div class="d-flex mt-3 ">
                   {% for allergen in all_the_item.allergy.all|slice:":4" %}
-                     <h5 class="badge badge-light text-dark rounded-8 mb-3 me-2">{{ allergen.name }}</h5>
+                     <h5 class="badge badge-info text-dark rounded-8 mb-3 me-2">{{ allergen.name }}</h5>
                   {% empty %}
                      <p>No allergies</p>
                    {% endfor %}
@@ -48,14 +48,14 @@
 
             <div style="text-align: end;">
               <!---======= Details btn ========-->
-              <a href="{% url 'single_page' %}" class="btn btn-dark btn_store flex-shrink-0 rounded-8">
+              <a href="{% url 'single_page' %}" class="btn btn-dark btn_store flex-shrink-0 rounded-8 shadow-0 pe-3 ps-3">
                 <i class="bi bi-info-square"></i>
               </a>
             
                 <!---======= ADD TO CART btn ========-->  
               <button type="submit" name="items[]" value="{{ all_the_item.pk }}"
-              class="btn btn-dark btn_store flex-shrink-0  ms-2 rounded-8 {% if all_the_item.is_out_of_stock %}disabled{% endif %}">
-              <i class="bi bi-bag-plus"></i> test</button> 
+              class="btn btn-dark btn_store flex-shrink-0  ms-2 rounded-8 shadow-0{% if all_the_item.is_out_of_stock %}disabled{% endif %}">
+              <i class="bi bi-bag-plus"></i> Reserve</button> 
             </div>
           </div>
         </div>
