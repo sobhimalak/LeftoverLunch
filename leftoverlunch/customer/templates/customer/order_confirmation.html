@@ -1,140 +1,158 @@
 {% extends 'customer/base.html' %}
 
 {% block content %}
-<div class="container pt-5">
-    <div class="row pt-5">
-        <h1 class='pb-3'>Shopping Cart</h1>
-        <div class="col-xl-9">
-            <div class="card border shadow-none">
-                <div class="card-body ">
-                    <div class="d-flex row border-bottom pb-3">
-                        <div class="d-flex flex-row mb-3 justify-content-between">
-                            
-                                {% for item in items %}
-                                <p class='font-size:12px'><a href="#" class="text-dark">{{ item.name }}</a></p>
-                                <p class="text-muted mb-0 ">
-                                    <i class="bi bi-star text-warning" style="font-size: 0.7rem"></i>
-                                    <i class="bi bi-star text-warning" style="font-size: 0.7rem"></i>
-                                    <i class="bi bi-star text-warning" style="font-size: 0.7rem"></i>
-                                    <i class="bi bi-star text-warning" style="font-size: 0.7rem"></i>
-                                    <i class="bi bi-star-half text-warning" style="font-size: 0.7rem"></i>
-                                </p>
-                                 <!-- <p class="mb-0 mt-1">color<span class="fw-medium"></span></p> -->
-                            
-                            <div class="d-flex flex-row mb-3">
-                                <div>
-                                    <div class="d-inline-flex">
-                                        <select class="form-select form-select-sm w-xl">
-                                            <option value="1">1</option>
-                                            <option value="2" selected="">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-row mb-3">
-                                <div>
-                                    <h6 class="mb-0 mt-2"><span class="text-muted me-2"></span>{{ item.price }} kr</h6>
-                                                {% endfor %}
-                                </div>
-                            </div>
-                            <div class="flex-shrink-0 ms-2 d-flex flex-row">
-                                <ul class="list-inline mb-0 font-size-16">
-                                    <li class="list-inline-item">
-                                        <a href="#" class="text-muted px-1">
-                                            <i class="bi bi-trash text-black"></i>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#" class="text-muted px-1">
-                                            <i class="bi bi-heart text-danger"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div>
-                        <div class="row">
-                            <div class="col-md-12 ">
-                                <div class="mt-3 float-end">
-                                    <p class="text-muted mb-2">Total: </p>
-                                    <h5>{{ price }} kr</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
+
+<section class="h-100 h-custom pt-5">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12">
+          <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+            <div class="card-body p-0">
+              <div class="row g-0">
+                <div class="col-lg-8">
+                  <div class="p-5">
+                    <div class="d-flex justify-content-between align-items-center mb-5">
+                      <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
+                      {% for item in items %}
+                      <h6 class="mb-0 text-muted">Order # {{ item.id }}</h6>
+                    </div>
+                    <hr class="my-4">
+  
+                    <div class="row mb-4 d-flex justify-content-between align-items-center">
+                        
+                      <div class="col-md-3 col-lg-3 col-xl-3">
+                        <h6 class="text-black text-capitalize">{{ item.name }}</h6>
+                        <h6 class="text-black mb-0"></h6>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                        <button class="btn btn-link px-2"
+                          onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                          <i class="fas fa-minus"></i>
+                        </button>
+  
+                        <input id="form1" min="0" name="quantity" value="1" type="number"
+                          class="form-control form-control-sm" />
+  
+                        <button class="btn btn-link px-2"
+                          onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                          <i class="fas fa-plus"></i>
+                        </button>
+                      </div>
+                      <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                        <h6 class="mb-0">{{ price }} kr</h6>
+                      </div>
+                      <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                        <a href="#!" class="text-muted"><i class="bi bi-x-lg"></i></a>
+                      </div>
+                    </div>
+                    {% endfor %}
+                    <hr class="my-4">
+  
+                    <div class="row mb-4 d-flex justify-content-between align-items-center">
+                      
+                      <div class="col-md-3 col-lg-3 col-xl-3">
+                        <h6 class="text-muted">Shirt</h6>
+                        <h6 class="text-black mb-0">Cotton T-shirt</h6>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                        <button class="btn btn-link px-2"
+                          onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                          <i class="fas fa-minus"></i>
+                        </button>
+  
+                        <input id="form1" min="0" name="quantity" value="1" type="number"
+                          class="form-control form-control-sm" />
+  
+                        <button class="btn btn-link px-2"
+                          onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                          <i class="fas fa-plus"></i>
+                        </button>
+                      </div>
+                      <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                        <h6 class="mb-0">44.00 kr</h6>
+                      </div>
+                      <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                        <a href="#!" class="text-muted"><i class="bi bi-x-lg"></i></a>
+                      </div>
+                    </div>
+  
+                    <hr class="my-4">
+  
+                    <div class="row mb-4 d-flex justify-content-between align-items-center">
+                      
+                      <div class="col-md-3 col-lg-3 col-xl-3">
+                        <h6 class="text-muted">Shirt</h6>
+                        <h6 class="text-black mb-0">Cotton T-shirt</h6>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                        <button class="btn btn-link px-2"
+                          onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                          <i class="fas fa-minus"></i>
+                        </button>
+  
+                        <input id="form1" min="0" name="quantity" value="1" type="number"
+                          class="form-control form-control-sm" />
+  
+                        <button class="btn btn-link px-2"
+                          onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                          <i class="fas fa-plus"></i>
+                        </button>
+                      </div>
+                      <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                        <h6 class="mb-0">44.00 kr</h6>
+                      </div>
+                      <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                        <a href="#!" class="text-muted"><i class="bi bi-x-lg"></i></a>
+                      </div>
+                    </div>
+  
+                    <hr class="my-4">
+  
+                    <div class="pt-5">
+                      <h6 class="mb-0"><a href="{% url 'index' %}" class="text-body"><i
+                            class="bi bi-arrow-left me-2"></i>Back to shop</a></h6>
+                    </div>
+                  </div>
                 </div>
-
-            </div>
-            <!-- end card -->
-
-            <div class="row my-4">
-                <div class="col-sm-6">
-                    <a href="{% url 'index' %}" class="btn btn-light btn_checkout flex-shrink-0 ms-2 shadow-0 border-0">
-                        <i class="bi bi-arrow-left me-1"></i> Continue Shopping </a>
-                </div> <!-- end col -->
-                <div class="col-sm-6">
-                    <div class="text-sm-end mt-2 mt-sm-0">
-                        <button type="submit" name="" value=""
-                      class="btn btn-light btn_checkout flex-shrink-0  ms-2 shadow-0 border-0">
-                      <i class="bi bi-bag-plus"></i> Checkout</button>
+                <div class="col-lg-4 bg-grey">
+                  <div class="p-5">
+                    <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+                    <hr class="my-4">
+  
+                    <div class="d-flex justify-content-between mb-4">
+                      <h5 class="text-uppercase">items 3</h5>
+                      <h5>{{ price }} kr</h5>
                     </div>
-                    
-
-                </div> <!-- end col -->
-            </div> <!-- end row-->
+    
+  
+                    <h5 class="text-uppercase mb-3">Give code</h5>
+  
+                    <div class="mb-5">
+                      <div class="form-outline">
+                        <input type="text" id="form3Examplea2" class="form-control form-control-lg " />
+                        <label class="form-label" for="form3Examplea2">Enter your code</label>
+                      </div>
+                    </div>
+  
+                    <hr class="my-4">
+  
+                    <div class="d-flex justify-content-between mb-5">
+                      <h5 class="text-uppercase">Total price</h5>
+                      <h5>{{ price }} kr</h5>
+                    </div>
+  
+                    <button type="button" class="btn btn_store btn-dark btn-block flex-shrink-0  ms-2 rounded-8"
+                      data-mdb-ripple-color="dark">Proceed to Pay</button>
+  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <!-- Order Summary The right card-->
-        <div class="col-xl-3">
-            <div class="mt-5 mt-lg-0">
-                <div class="card border shadow-none">
-                    <div class="card-header bg-transparent border-bottom py-3 px-4">
-                        <h5 class="font-size-16 mb-0">Order Summary <span class="float-end">#MN0124</span></h5>
-                    </div>
-                    
-                    <div class="card-body p-4 pt-2">
-
-                        <div class="table-responsive">
-                            <table class="table mb-0">
-                                <tbody>
-                                    <tr>
-                                        <td>Sub Total :</td>
-                                        <td class="text-end">780 kr</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Saved : </td>
-                                        <td class="text-end">- 78 kr</td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>Estimated Tax : </td>
-                                        <td class="text-end">18.20 kr</td>
-                                    </tr>
-                                    <tr class="bg-light">
-                                        <th>Total :</th>
-                                        <td class="text-end">
-                                            <span class="fw-bold">745.2 kr</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- end table-responsive -->
-                    </div>
-                </div>
-            </div>
-        </div> <!-- End of Order Summary The right card-->
+      </div>
     </div>
-    <!-- end row -->
-</div>
-
+  </section>
 {% endblock content %}
