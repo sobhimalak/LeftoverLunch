@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
-from .models import MenuItem, Category, OrderModel
+from .models import *
 from django.http import Http404
+
 
 
 
@@ -21,16 +22,11 @@ class single_page(View):
 class Login(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'customer/login.html')
-
-class Cart(View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'customer/cart.html')
-
-
-class Store(View):
+    
+class Order(View):
     def get(self, request, *args, **kwargs):
         # get every item from each category
-        appetizers = MenuItem.objects.filter(category__name__contains='Appetizer',stock__gt=0)
+        appetizers = MenuItem.objects.filter(category__name__contains='Appetizer')
         entres = MenuItem.objects.filter(category__name__contains='Entre', stock__gt=0)
         desserts = MenuItem.objects.filter(category__name__contains='Dessert', stock__gt=0)
         drinks = MenuItem.objects.filter(category__name__contains='Drink', stock__gt=0)
@@ -44,7 +40,7 @@ class Store(View):
         }
 
         # render the template
-        return render(request, 'customer/store.html', context)
+        return render(request, 'customer/order.html', context)
 
     def post(self, request, *args, **kwargs):
         order_items = {
