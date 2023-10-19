@@ -30,4 +30,5 @@ Activate the virtual environment
 ```python manage.py makemigrations```
 ```python manage.py migrate```
 
-
+6. Create a superuser
+```python manage.py createsuperuser```

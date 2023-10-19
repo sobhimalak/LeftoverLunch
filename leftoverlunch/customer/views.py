@@ -17,6 +17,7 @@ class About(View):
 class single_page(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'customer/single_page.html')
+    
 class Register(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'customer/register.html')
