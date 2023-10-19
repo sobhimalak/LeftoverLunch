@@ -6,7 +6,6 @@ admin.site.register(MenuItem)
 admin.site.register(Categorie)
 admin.site.register(OrderModel)
 admin.site.register(Allergie)
-admin.site.register(RestaurantLocation)
 
 
 admin.site.site_header = 'Leftover Lunch Admin'
