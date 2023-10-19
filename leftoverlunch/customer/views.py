@@ -5,7 +5,6 @@ from django.http import Http404
 
 
 
-
 class Index(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'customer/index.html')
@@ -18,10 +17,15 @@ class About(View):
 class single_page(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'customer/single_page.html')
+class Register(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'customer/register.html')
 
 class Login(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'customer/login.html')
+    
+
     
 class Order(View):
     def get(self, request, *args, **kwargs):
@@ -32,6 +36,8 @@ class Order(View):
         desserts = MenuItem.objects.filter(category__name__contains='Dessert', stock__gt=0)
         drinks = MenuItem.objects.filter(category__name__contains='Drink', stock__gt=0)
         
+        store_location = StoreLocation.objects.first()
+
         # pass into context
         context = {
             'all_items': all_items,
@@ -39,6 +45,7 @@ class Order(View):
             'entres': entres,
             'desserts': desserts,
             'drinks': drinks,
+            'store_location': store_location, 
         }
 
         # render the template
@@ -58,9 +65,14 @@ class Order(View):
                 item_data = {
                     'id': menu_item.pk,
                     'name': menu_item.name,
-                    'price': menu_item.price
+                    'price': menu_item.price,
+                    
+                
                 }
-
+               # get the created_on date
+                
+               
+                    
                 order_items['items'].append(item_data)
 
                 # Deduct 1 from the available stock after adding to the order
