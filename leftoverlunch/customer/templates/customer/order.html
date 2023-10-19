@@ -30,8 +30,7 @@
             <hr class="mt-0">
             <div class="d-flex flex-row justify-content-between py-3">
               <div class="d-flex flex-column"><span class="text-muted"><i class="bi bi-clock"></i> Collect : {{ all_the_item.collect_time_start }} - {{ all_the_item.collect_time_end }}</span>
-                
-                <span class="text-muted"><i class="bi bi-geo-alt"></i><a href="url" class="text-muted link-dark"> Restaurant Husman</a></span>
+                <span class="text-muted"><i class="bi bi-geo-alt"></i><a href="{{ all_the_item.store_location.store_link }}" class="text-muted link-dark" target="_blank"> {{ all_the_item.store_location.name }}</a></span>
                 <div class="d-flex mt-3 ">
                   {% for allergen in all_the_item.allergy.all|slice:":4" %}
                      <h5 class="badge badge-danger text-dark rounded-8 mb-3 me-2">{{ allergen.name }}</h5>
