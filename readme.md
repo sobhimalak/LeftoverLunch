@@ -29,3 +29,5 @@ Activate the virtual environment
 5. This is how you do migrations    
 ```python manage.py makemigrations```
 ```python manage.py migrate```
+
+
