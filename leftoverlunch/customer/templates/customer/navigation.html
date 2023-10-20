@@ -1,11 +1,11 @@
-  
+{% load static %}
+
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-inverse text-uppercase">
     <div class="container-fluid">
-      {% load static %}
       <div class="justify-content-center ">
         <a href="{% url 'index' %}">
-          <img src="https://camo.githubusercontent.com/a0fd8366fbe4d266fecccc5d71a529c42914a30d16ab325e6f16d21ba758f383/68747470733a2f2f636c6f7564756c752e636f6d2f77702d636f6e74656e742f75706c6f6164732f323032332f30392f6c6f672e706e67" height="35" loading="lazy" /></a>
-      </div>
+          <img src="https://cloudulu.com/wp-content/uploads/2023/10/logo.2.0.png" height="45" loading="lazy" /></a>
+        </div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -29,7 +29,7 @@
     {% else %}
     <a  class="text-reset me-3" href="{% url 'login' %}" 
     data-toggle="tooltip" data-placement="bottom" title="Log In">
-    <i class="bi bi-person text-light text-lowercase " style="font-size: 1.5em"></i>
+     <i class="bi bi-person text-light text-lowercase " style="font-size: 1.5em"></i>
     </a>
     {% endif %}
         <!-- Cart -->

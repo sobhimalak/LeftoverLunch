@@ -32,4 +32,7 @@ urlpatterns = [
     path('order_confirmation/', Order.as_view(), name='order_confirmation'),
     path('register/', Register.as_view(), name='register'),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] 
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
