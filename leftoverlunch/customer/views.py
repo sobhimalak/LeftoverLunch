@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from .models import *
 from django.http import Http404
+from django.views.generic import DetailView
 
 
 
@@ -14,9 +15,10 @@ class About(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'customer/about.html')
 
-class single_page(View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'customer/single_page.html')
+class item_detail(View):
+    def get(self, request, pk, *args, **kwargs):
+        return render(request, 'customer/item_detail.html')
+    
 class Register(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'customer/register.html')
@@ -66,11 +68,8 @@ class Order(View):
                     'id': menu_item.pk,
                     'name': menu_item.name,
                     'price': menu_item.price,
-                    
-                
-                }
-               # get the created_on date
-                
+
+                }           
                
                     
                 order_items['items'].append(item_data)
@@ -97,3 +96,10 @@ class Order(View):
         }
 
         return render(request, 'customer/order_confirmation.html', context)
+    
+
+class ItemDetailView(DetailView):
+    model = MenuItem
+    template_name = 'customer/item_detail.html'
+    context_object_name = 'item'
+    app_name = 'customer'

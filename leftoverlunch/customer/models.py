@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from datetime import datetime
 
 class StoreLocation(models.Model):
@@ -11,6 +12,10 @@ class StoreLocation(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def get_store_link_url(self):
+        return self.store_link
+    
    
 class MenuItem(models.Model):
     TODAY = 'Today'
@@ -41,6 +46,8 @@ class MenuItem(models.Model):
 
     def __str__(self):
         return self.name
+    
+   
     # this is a property decorator that will return the url of the image
     @property
     def imageURL(self):

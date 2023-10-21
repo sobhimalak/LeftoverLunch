@@ -1,0 +1,34 @@
+{% extends 'customer/base.html' %}
+{% block content %}
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5 text-light">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ item.imageURL }}" alt="{{ item.name }}" /></div>
+            <div class="col-md-6 ">
+                <span><i class="bi bi-geo-alt"></i><a href="{{ item.store_location.store_link  }}" target="_blank" class="link-light" > {{ item.store_location.name }}</a></span>
+                 <!-- <div class="small mb-1">SKU: {{ item.id}} </div> -->
+                <h1 class="display-5 fw-bolder">{{ item.name }}</h1>
+                <div class="fs-5 mb-5">
+                    <span>{{ item.price}} kr</span>
+                </div>
+                <h5 class="fw-bolder">Description</h5>
+                <p class="lead">{{ item.description }}</p>
+                <form method="post" action="{% url 'order_confirmation' %}">
+                    {% csrf_token %}
+                    <div class="d-flex">
+                    <input type="hidden" name="item_id" value="{{ item.pk }}">
+                    <input class="form-control text-center me-3"  type="number" name="items[]" value="{{ all_the_item.pk }}" style="max-width: 3rem" />
+                    <button type="submit" class="btn btn-light flex-shrink-0 ms-2 rounded-8 shadow-0">
+                        <i class="bi bi-bag-plus"></i> Add to Cart
+                    </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+       
+    </div>
+</section>
+
+{% endblock content %}
+

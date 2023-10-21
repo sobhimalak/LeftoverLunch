@@ -26,9 +26,8 @@ urlpatterns = [
     path('', Index.as_view(), name='index'),
     path('about/', About.as_view(), name='about'),
     path('order/', Order.as_view(), name='order'),
-    path('single_page/', single_page.as_view(), name='single_page'),
     path('login/', Login.as_view(), name='login'),
-    path('cart/', views.Order.as_view(), name='cart'),
+    path('item_detail/', views.ItemDetailView.as_view(), name='item_detail'),
     path('order_confirmation/', Order.as_view(), name='order_confirmation'),
     path('register/', Register.as_view(), name='register'),
 
