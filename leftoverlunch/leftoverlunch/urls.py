@@ -29,8 +29,10 @@ urlpatterns = [
     path('single_page/', single_page.as_view(), name='single_page'),
     path('login/', Login.as_view(), name='login'),
     path('cart/', views.Order.as_view(), name='cart'),
-    path('order_confirmation/', Order.as_view(), name='order_confirmation'),
+    path('order_confirmation/<int:pk>', OrderConfirmation.as_view(), name='order_confirmation'),
     path('register/', Register.as_view(), name='register'),
+    path('payment_confirmation/', OrderPayConfirmation.as_view(), name='payment_submitted'),
+
 
 ] 
 if settings.DEBUG:

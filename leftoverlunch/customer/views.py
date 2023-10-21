@@ -5,6 +5,7 @@ from django.http import Http404
 
 
 
+
 class Index(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'customer/index.html')
@@ -69,11 +70,7 @@ class Order(View):
                     'price': menu_item.price,
                     
                 
-                }
-               # get the created_on date
-                
-               
-                    
+                } 
                 order_items['items'].append(item_data)
 
                 # Deduct 1 from the available stock after adding to the order
@@ -89,12 +86,31 @@ class Order(View):
         item_ids = [item['id'] for item in order_items['items']]
 
         # Create an order and add items to it
-        order = OrderModel.objects.create(price=price)
+        order = OrderModel.objects.create(
+            price=price,
+            )
         order.items.add(*item_ids)
 
         context = {
             'items': order_items['items'],
             'price': price
         }
+        return redirect('order_confirmation', pk=order.pk)
 
+class OrderConfirmation(View):
+    def get(self, request, pk, *args, **kwargs):
+        order = OrderModel.objects.get(pk=pk)
+        
+        context = {
+            'pk': order.pk,
+            'items': order.items.all(),
+            'price': order.price,
+        }
         return render(request, 'customer/order_confirmation.html', context)
+    def post(self, request, pk, *args, **kwargs):
+        print(request.body)
+
+class OrderPayConfirmation(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'customer/order_pay_confirmation.html')
+    

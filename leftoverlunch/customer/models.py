@@ -1,5 +1,6 @@
 from django.db import models
-from datetime import datetime
+from django.conf import settings
+
 
 class StoreLocation(models.Model):
     name = models.CharField(max_length=255, help_text='Enter the name of your store')
@@ -69,6 +70,7 @@ class OrderModel(models.Model):
     price = models.DecimalField(max_digits=7, decimal_places=2)
     items = models.ManyToManyField(
         'MenuItem', related_name='order', blank=True)
+    is_paid = models.BooleanField(default=False)
 
     def __str__(self):
         return f'Order: {self.created_on.strftime("%b %d %I: %M %p")}'
