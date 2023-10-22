@@ -86,14 +86,12 @@ class Order(View):
         item_ids = [item['id'] for item in order_items['items']]
 
         # Create an order and add items to it
-        order = OrderModel.objects.create(
-            price=price,
-            )
+        order = OrderModel.objects.create(price=price, is_paid=False)
         order.items.add(*item_ids)
 
         context = {
             'items': order_items['items'],
-            'price': price
+            'price': price,
         }
         return redirect('order_confirmation', pk=order.pk)
 

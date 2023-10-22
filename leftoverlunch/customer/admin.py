@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import *
 
-
+# create a MenuItem admin to view the menu item in the admin page
 class MenuItemAdmin(admin.ModelAdmin): 
     list_display = ('name', 'collect_day', 'collect_time_start', 'collect_time_end', 'stock', 'price')
     search_fields = ('name', 'collect_day', 'collect_time_start', 'collect_time_end', 'stock', 'price')

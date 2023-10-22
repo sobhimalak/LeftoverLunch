@@ -8,7 +8,9 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-    ]
+    ('sites', '0001_initial'),  # Use the correct migration name of the sites app
+]
+
 
     operations = [
         migrations.CreateModel(

@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from customer.views import *
 from customer import views
-
+from django.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,6 +32,7 @@ urlpatterns = [
     path('order_confirmation/<int:pk>', OrderConfirmation.as_view(), name='order_confirmation'),
     path('register/', Register.as_view(), name='register'),
     path('payment_confirmation/', OrderPayConfirmation.as_view(), name='payment_submitted'),
+    path('accounts/', include('allauth.urls')),
 
 
 ] 
