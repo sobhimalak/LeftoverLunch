@@ -70,7 +70,9 @@ class OrderModel(models.Model):
     price = models.DecimalField(max_digits=7, decimal_places=2)
     items = models.ManyToManyField(
         'MenuItem', related_name='order', blank=True)
-    is_paid = models.BooleanField(default=False)
+    name = models.CharField(max_length=50, blank=True)
+    telephone = models.CharField(max_length=50, blank=True)
+    is_paid = models.BooleanField(default=False, help_text='Check this box if the order has been paid for')
 
     def __str__(self):
         return f'Order: {self.created_on.strftime("%b %d %I: %M %p")}'

@@ -1,12 +1,22 @@
 {% extends 'customer/base.html' %}
 
 {% block content %}
-<div class="container mb-5">
-    <div class="row justify-content-center mt-1">
-        <div class="col-md-5 col-sm-12 p-4 text-center">
+<section class="pt-5">
+    <div class="container py-5">
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-8 ">
+          <div class="card white_color text-black " style="border-radius: 15px;">
+            <div class="card-body p-0 ">
+              <div class="row" >
+        <div class="col-md-12 col-sm-12 p-4 text-center">
             <h1>Payment Submitted!</h1>
-            <a href="{% url 'index' %}">Go to the homepage</a>
+            <a class="btn btn-dark btn_store flex-shrink-0 ms-2 rounded-8 shadow-0" href="{% url 'index' %}">Go to the homepage</a>
+        </div>
         </div>
     </div>
 </div>
+</div>
+</div>
+</div>
+</section>
 {% endblock content %}
