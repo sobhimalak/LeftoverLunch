@@ -7,6 +7,8 @@ import stripe
 from django.conf import settings
 from django.http import JsonResponse
 from django.views.generic import DetailView
+from django.db.models import Q
+
 
 
 
@@ -28,7 +30,33 @@ class Register(View):
         return render(request, 'customer/register.html')
 
 
+class Menu(View):
+    def get(self, request, *args, **kwargs):
+        menu_items = MenuItem.objects.all()
 
+        context = {
+            'menu_items': menu_items
+        }
+
+        return render(request, 'customer/menu.html', context)
+
+
+class MenuSearch(View):
+    def get(self, request, *args, **kwargs):
+        query = self.request.GET.get("q")
+
+        menu_items = MenuItem.objects.filter(
+            Q(name__icontains=query) |
+            Q(price__icontains=query) |
+            Q(description__icontains=query)
+        )
+
+        context = {
+            'menu_items': menu_items,
+            'search_query': query
+        }
+
+        return render(request, 'customer/menu.html', context)
 
 
     
