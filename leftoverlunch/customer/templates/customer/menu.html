@@ -67,8 +67,7 @@
                         </a>
                         <!---======= ADD TO CART btn ========-->
                         {% if not item.is_out_of_stock and not request.GET.q %}
-                    <button type="submit" name="items[]" value="{{ item.pk }}"
-                        class="btn btn-dark btn_store flex-shrink-0 ms-2 rounded-8 shadow-0"><i class="bi bi-bag-plus"></i> Reserve</button>
+                    <button type="submit" name="items[]" value="{{ item.pk }}" class="btn btn-dark btn_store flex-shrink-0 ms-2 rounded-8 shadow-0"><i class="bi bi-bag-plus"></i> Reserve</button>
                     {% endif %}
                     </div>
                 </div>

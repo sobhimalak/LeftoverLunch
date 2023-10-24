@@ -45,7 +45,7 @@
                         </button>
                       </div>
                       <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                        <h6 class="mb-0">{{ price }} kr</h6>
+                        <h6 class="mb-0">{{ item.price }} kr</h6>
                       </div>
                       
                       <div class="col-md-1 col-lg-1 col-xl-1 text-end">
@@ -71,7 +71,7 @@
   
                     <div class="d-flex justify-content-between mb-5">
                       <h5 class="text-uppercase">Total price</h5>
-                      <h5>5000 kr</h5>
+                      <h5>{{ price }} kr</h5>
                     </div>
   
                     <!--<button type="button" class="btn btn_store btn-dark btn-block flex-shrink-0  ms-2 rounded-8"
@@ -118,7 +118,11 @@
         </div>
       </div>
      </div>
+
+
+     
   </section>
+
 
   <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <script>
@@ -168,25 +172,35 @@ const csrftoken = getCookie('csrftoken');
         }]
       });
     },
-    // Execute the payment
     onAuthorize: function(data, actions) {
+      var confirmationUrl = "{% url 'order-confirmation' pk %}";
+      console.log("Confirmation URL: " + confirmationUrl);
+  
       console.log("Payment authorized. Executing redirection logic.");
       return actions.payment.execute().then(function() {
-        // Show a confirmation message to the buyer
-        $.ajax({
-            type: 'POST',
-            url: "{% url 'order_confirmation' pk %}",
-            beforeSend: function(request) {
-                request.setRequestHeader('X-CSRFToken', csrftoken)
-            },
-            data: JSON.stringify({'isPaid': true}),
-            success: function(data) {
-                window.location.href = '/payment-confirmation/'
-            }
-        })
+          // Show a confirmation message to the buyer
+          $.ajax({
+              type: 'POST',
+              url: confirmationUrl,
+              beforeSend: function(request) {
+                  request.setRequestHeader('X-CSRFToken', csrftoken);
+              },
+              data: JSON.stringify({'isPaid': true}),
+              success: function(data) {
+                  console.log("AJAX Response: ", data);
+                  window.location.href = '/payment-confirmation/';
+              },
+              error: function(xhr, status, error) {
+                  console.error("AJAX Error: ", error);
+                  // Handle AJAX errors if necessary
+              }
+          });
       });
-    },
+  },
   }, '#paypal-button');
+  
+
+  
 
 </script>
 

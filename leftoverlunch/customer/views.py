@@ -1,14 +1,11 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.views import View
 from .models import *
 from django.http import Http404
 import json
-import stripe
 from django.conf import settings
-from django.http import JsonResponse
-from django.views.generic import DetailView
 from django.db.models import Q
-
+from django.core.mail import send_mail
 
 
 
@@ -122,12 +119,14 @@ class Order(View):
             price=price,
             is_paid=False)
         order.items.add(*item_ids)
+        
+        
 
         context = {
             'items': order_items['items'],
             'price': price,
         }
-        return redirect('order_confirmation', pk=order.pk)
+        return redirect('order-confirmation', pk=order.pk)
 
 
 
@@ -157,19 +156,14 @@ class OrderConfirmation(View):
         return render(request, 'customer/order_confirmation.html', context)
     
     def post(self, request, pk, *args, **kwargs):
-        print("Received POST request in OrderConfirmation view.")
-        print(request.body)
         data = json.loads(request.body)
         
         if data['isPaid']:
-            print("Payment received. Marking the order as paid.")
             order = OrderModel.objects.get(pk=pk)
             order.is_paid = True
             order.save()
-            print("Order status updated:", order.is_paid)
-        else:
-            print("Payment not received.")
-        return redirect('order_pay_confirmation')
+           
+        return redirect('payment-confirmation')
 
 class OrderPayConfirmation(View):
     def get(self, request, *args, **kwargs):
