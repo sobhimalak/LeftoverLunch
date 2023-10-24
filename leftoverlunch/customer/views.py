@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.views import View
 from .models import *
 from django.http import Http404
@@ -6,6 +6,7 @@ import json
 from django.conf import settings
 from django.db.models import Q
 from django.core.mail import send_mail
+from django.http import JsonResponse
 
 
 
@@ -18,7 +19,7 @@ class About(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'customer/about.html')
 
-class single_page(View):
+class SinglePage(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'customer/single_page.html')
     
@@ -27,38 +28,16 @@ class Register(View):
         return render(request, 'customer/register.html')
 
 
-class Menu(View):
+class Order(View):
     def get(self, request, *args, **kwargs):
-        menu_items = MenuItem.objects.all()
-
-        context = {
-            'menu_items': menu_items
-        }
-
-        return render(request, 'customer/menu.html', context)
-
-
-class MenuSearch(View):
-    def get(self, request, *args, **kwargs):
-        query = self.request.GET.get("q")
-
-        menu_items = MenuItem.objects.filter(
+        query = request.GET.get("q")
+        
+        # get every item from each category and apply search filter if query is present
+        all_items = MenuItem.objects.filter(
             Q(name__icontains=query) |
             Q(price__icontains=query) |
             Q(description__icontains=query)
-        )
-
-        context = {
-            'menu_items': menu_items,
-            'search_query': query
-        }
-
-        return render(request, 'customer/menu.html', context)
-
-
-    
-class Order(View):
-    def get(self, request, *args, **kwargs):
+        ) if query else MenuItem.objects.all()
         # get every item from each category
         all_items = MenuItem.objects.all()
         appetizers = MenuItem.objects.filter(category__name__contains='Appetizer')
@@ -83,10 +62,7 @@ class Order(View):
 
     def post(self, request, *args, **kwargs):
         
-        order_items = {
-            'items': []
-        }
-
+        order_items = {'items': []}
         items = request.POST.getlist('items[]')
         
 
@@ -122,10 +98,6 @@ class Order(View):
         
         
 
-        context = {
-            'items': order_items['items'],
-            'price': price,
-        }
         return redirect('order-confirmation', pk=order.pk)
 
 
@@ -163,10 +135,15 @@ class OrderConfirmation(View):
             order.is_paid = True
             order.save()
            
-        return redirect('payment-confirmation')
+        return redirect('payment-confirmation', pk=pk)
 
 class OrderPayConfirmation(View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'customer/order_pay_confirmation.html')
+    def get(self, request, pk,*args, **kwargs):
+        order = OrderModel.objects.get(pk=pk)
+        context = {
+            'pk': pk,
+            'isPaid': order.is_paid,
+        }
+        return render(request, 'customer/order_pay_confirmation.html',context)
 
 

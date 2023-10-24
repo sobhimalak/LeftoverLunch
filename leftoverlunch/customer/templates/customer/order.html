@@ -45,10 +45,12 @@
               </div>
               <p class="card-text">{{ app.description }}</p>
               <div style="text-align: end;">
-                <!---======= Details btn ========-->
-                <a href="{% url 'single_page' %}" class="btn btn-dark btn_store flex-shrink-0 rounded-8 shadow-0 pe-3 ps-3">
-                  <i class="bi bi-info-square"></i>
-                </a>
+                <!---======= Details btn 
+                <a href="{% url 'single-page' %}" class="btn btn-dark btn_store flex-shrink-0 rounded-8 shadow-0 pe-3 ps-3">
+                  <i class="bi bi-info-square"></i> 
+                </a> ========-->
+
+              
                   <!---======= ADD TO CART btn ========-->  
                  <button type="submit" name="items[]" value="{{ app.pk }}"
                   class="btn btn-dark btn_store flex-shrink-0 ms-2 rounded-8 shadow-0{% if app.is_out_of_stock %} disabled{% endif %}">
@@ -106,10 +108,10 @@
               </div>
               <p class="card-text">{{ entre.description }}</p>
               <div style="text-align: end;">
-                <!---======= Details btn ========-->
-                <a href="{% url 'single_page' %}" class="btn btn-dark btn_store flex-shrink-0 rounded-8 shadow-0 pe-3 ps-3">
-                  <i class="bi bi-info-square"></i>
-                </a>
+                <!---======= Details btn 
+                <a href="{% url 'single-page' %}" class="btn btn-dark btn_store flex-shrink-0 rounded-8 shadow-0 pe-3 ps-3">
+                  <i class="bi bi-info-square"></i> 
+                </a> ========-->
                   <!---======= ADD TO CART btn ========-->  
                  <button type="submit" name="items[]" value="{{ entre.pk }}"
                   class="btn btn-dark btn_store flex-shrink-0 ms-2 rounded-8 shadow-0{% if entre.is_out_of_stock %} disabled{% endif %}">
@@ -165,10 +167,10 @@
               </div>
               <p class="card-text">{{ dessert.description }}</p>
               <div style="text-align: end;">
-                <!---======= Details btn ========-->
-                <a href="{% url 'single_page' %}" class="btn btn-dark btn_store flex-shrink-0 rounded-8 shadow-0 pe-3 ps-3">
-                  <i class="bi bi-info-square"></i>
-                </a>
+                <!---======= Details btn 
+                <a href="{% url 'single-page' %}" class="btn btn-dark btn_store flex-shrink-0 rounded-8 shadow-0 pe-3 ps-3">
+                  <i class="bi bi-info-square"></i> 
+                </a> ========-->
                   <!---======= ADD TO CART btn ========-->  
                  <button type="submit" name="items[]" value="{{ dessert.pk }}"
                   class="btn btn-dark btn_store flex-shrink-0 ms-2 rounded-8 shadow-0{% if dessert.is_out_of_stock %} disabled{% endif %}">
@@ -227,10 +229,10 @@
                 </div>
                 <p class="card-text">{{ drink.description }}</p>
                 <div style="text-align: end;">
-                  <!---======= Details btn ========-->
-                  <a href="{% url 'single_page' %}" class="btn btn-dark btn_store flex-shrink-0 rounded-8 shadow-0 pe-3 ps-3">
-                    <i class="bi bi-info-square"></i>
-                  </a>
+                  <!---======= Details btn 
+                  <a href="{% url 'single-page' %}" class="btn btn-dark btn_store flex-shrink-0 rounded-8 shadow-0 pe-3 ps-3">
+                    <i class="bi bi-info-square"></i> 
+                  </a> ========-->
                     <!---======= ADD TO CART btn ========-->  
                    <button type="submit" name="items[]" value="{{ drink.pk }}"
                     class="btn btn-dark btn_store flex-shrink-0 ms-2 rounded-8 shadow-0{% if drink.is_out_of_stock %} disabled{% endif %}">

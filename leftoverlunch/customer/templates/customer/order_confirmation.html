@@ -14,20 +14,15 @@
                     <div class="d-flex justify-content-between align-items-center mb-5">
                       <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
                       {% for item in items.all %}
-                      <h6 class="mb-0 text-muted">Order # {{ pk }}</h6>
-                      {% if order %}
-                      <h5 class="badge badge-danger text-dark rounded-8 mb-3 me-2">
-                        Order Status: {% if isPaid %}Paid{% else %}Not Paid{% endif %}</h5>
-                      {% else %}
-                      <p>Order Status: Not Available</p>
-                      {% endif %}
+                      <h6 class="badge badge-info text-dark rounded-8 mb-3 me-2">Order # {{ pk }}</h6>
+                      
                     </div>
                     <hr class="my-4">
   
                     <div class="row mb-4 d-flex justify-content-between align-items-center">
                         
                       <div class="col-md-3 col-lg-3 col-xl-3">
-                        <h6 class="text-black text-capitalize">{{ item.name }}</h6>
+                        <h4 class="text-black text-capitalize">{{ item.name }}</h4>
                         <h6 class="text-black mb-0"></h6>
                       </div>
                       <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
@@ -173,31 +168,33 @@ const csrftoken = getCookie('csrftoken');
       });
     },
     onAuthorize: function(data, actions) {
-      var confirmationUrl = "{% url 'order-confirmation' pk %}";
-      console.log("Confirmation URL: " + confirmationUrl);
-  
-      console.log("Payment authorized. Executing redirection logic.");
+      // Redirect to the order confirmation view after payment authorization
+      window.location.href = "{% url 'payment-confirmation' pk %}";
+
       return actions.payment.execute().then(function() {
-          // Show a confirmation message to the buyer
-          $.ajax({
-              type: 'POST',
-              url: confirmationUrl,
-              beforeSend: function(request) {
-                  request.setRequestHeader('X-CSRFToken', csrftoken);
-              },
-              data: JSON.stringify({'isPaid': true}),
-              success: function(data) {
-                  console.log("AJAX Response: ", data);
-                  window.location.href = '/payment-confirmation/';
-              },
-              error: function(xhr, status, error) {
-                  console.error("AJAX Error: ", error);
-                  // Handle AJAX errors if necessary
-              }
-          });
-      });
-  },
-  }, '#paypal-button');
+        // Show a confirmation message to the buyer
+        $.ajax({
+            type: 'POST',
+            url: confirmationUrl,
+            beforeSend: function(request) {
+                request.setRequestHeader('X-CSRFToken', csrftoken);
+            },
+            data: JSON.stringify({'isPaid': true}),
+            success: function(data) {
+                console.log("AJAX Response: ", data);
+                window.location.href = '/payment-confirmation/';
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error: ", error);
+                // Handle AJAX errors if necessary
+            }
+        });
+    });
+},
+}, '#paypal-button');
+   
+
+
   
 
   

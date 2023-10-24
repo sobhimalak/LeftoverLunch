@@ -12,15 +12,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', Index.as_view(), name='index'),
-    path('menu/', Menu.as_view(), name='menu'),
-    path('menu/search/', MenuSearch.as_view(), name='menu-search'),
+
     path('about/', About.as_view(), name='about'),
     path('order/', Order.as_view(), name='order'),
-    path('single_page/', single_page.as_view(), name='single_page'),
+    path('single-page/', SinglePage.as_view(), name='single-page'),
     path('order-confirmation/<int:pk>', OrderConfirmation.as_view(),name='order-confirmation'),
-    path('payment-confirmation/', OrderPayConfirmation.as_view(),name='payment-confirmation'),
+    path('payment-confirmation/<int:pk>', OrderPayConfirmation.as_view(),name='payment-confirmation'),
     path('register/', Register.as_view(), name='register'),
-    path('order_confirmation/', OrderConfirmation.as_view(), name='order_confirmation'),
+    
 
 
 ]   

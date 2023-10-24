@@ -1,6 +1,8 @@
 {% extends 'customer/base.html' %}
 {% block content %}
 
+<form method="POST" action="{% url 'order' %}">
+    {% csrf_token %}
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5 text-light">
         <div class="row gx-4 gx-lg-5 align-items-center">
@@ -17,9 +19,9 @@
                 
                 <p class="lead">Platea ac maximus quisque condimentum dictumst malesuada faucibus massa sociosqu rutrum dolor praesent mollis libero hendrerit elementum senectus parturient</p>
                 <div class="d-flex">
-                    <input class="form-control text-center me-3" id="inputQuantity" type="number" value="1" style="max-width: 3rem" />
-                    <button type="submit" name="items[]" value="{{ app.pk }}" class="btn btn-light flex-shrink-0 ms-2 rounded-8 shadow-0">
-                        <i class="bi bi-bag-plus"></i> Reserve
+                   <!--- <input class="form-control text-center me-3" id="inputQuantity" type="number" name="quantity" value="1" style="max-width: 3rem" /> -->
+                    <button type="submit" name="item_pk" value="{{ app.pk }}" class="btn btn-light flex-shrink-0 ms-2 rounded-8 shadow-0">
+                    <i class="bi bi-bag-plus"></i> Reserve
                     </button>
                 </div>
             </div>
@@ -27,6 +29,7 @@
        
     </div>
 </section>
+</form>
 
 {% endblock content %}
 
