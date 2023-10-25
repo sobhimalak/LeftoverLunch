@@ -16,19 +16,19 @@ password: admin12345
 1. activate the virtual environment
 Create a virtual environment
 ```python3 -m venv Django_venv```
-1.1. Activate the virtual environment
+2. Activate the virtual environment
 ```source Django_venv/bin/activate```
-2. cd LeftoverLunch
+3. cd LeftoverLunch
 
-3. install the requirements
+4. install the requirements
 ```pip install -r requirements.txt```
 
-4. run the application
+5. run the application
 ```python manage.py runserver```
 
-5. This is how you do migrations    
+6. This is how you do migrations    
 ```python manage.py makemigrations```
 ```python manage.py migrate```
 
-6. Create a superuser
+7. Create a superuser
 ```python manage.py createsuperuser```
