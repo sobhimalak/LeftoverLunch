@@ -1,6 +1,5 @@
 
 crispy-bootstrap5==0.7
-Django==4.2.5
 django-allauth==0.57.0
 django-crispy-forms==2.1
 django-paypal==2.0
