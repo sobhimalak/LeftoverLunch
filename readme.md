@@ -16,7 +16,7 @@ password: admin12345
 1. activate the virtual environment
 Create a virtual environment
 ```python3 -m venv Django_venv```
-Activate the virtual environment
+1.1. Activate the virtual environment
 ```source Django_venv/bin/activate```
 2. cd LeftoverLunch
 
