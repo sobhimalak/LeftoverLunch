@@ -38,6 +38,7 @@ class Order(View):
             Q(price__icontains=query) |
             Q(description__icontains=query)
         ) if query else MenuItem.objects.all()
+        
         # get every item from each category
         all_items = MenuItem.objects.all()
         appetizers = MenuItem.objects.filter(category__name__contains='Appetizer')
