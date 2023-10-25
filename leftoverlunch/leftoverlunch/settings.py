@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-z7^4y*w=4gvq!@km9qg++pwd$rb)8o$gi40%72nh5i88*8bz&5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['adminleftover.pythonanywhere.com']
 
 
 # Application definition
@@ -78,8 +78,11 @@ WSGI_APPLICATION = 'leftoverlunch.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'adminleftover$default',
+        'USER': 'adminleftover',
+        'PASSWORD': 'leftover123',
+        'HOST': 'adminleftover.mysql.pythonanywhere-services.com',
     }
 }
 
