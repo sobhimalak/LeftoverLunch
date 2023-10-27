@@ -1,0 +1,285 @@
+{% extends 'customer/base.html' %}
+{% block content %}
+
+<div class="container pt-5">
+    <div class="row pt-5">
+        <div class="col-xl-8">
+            <div class="card border shadow-none">
+                <div class="card-body ">
+
+                    <div class="d-flex align-items-start border-bottom pb-3">
+                        <div class="me-4">
+                            <img src="#" alt="" class="avatar-lg rounded">
+                        </div>
+
+                        <div class="flex-grow-1 align-self-center overflow-hidden">
+                            <div>
+
+                                <h5 class="text-truncate font-size-18"><a href="#" class="text-dark">testing
+                                    </a></h5>
+
+                                <p class="text-muted mb-0">
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star-half text-warning"></i>
+                                </p>
+                                <p class="mb-0 mt-1">Color : <span class="fw-medium">Gray</span></p>
+                            </div>
+                        </div>
+
+                        <div class="flex-shrink-0 ms-2">
+                            <ul class="list-inline mb-0 font-size-16">
+                                <li class="list-inline-item">
+                                    <a href="#" class="text-muted px-1">
+                                        <i class="mdi mdi-trash-can-outline"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#" class="text-muted px-1">
+                                        <i class="mdi mdi-heart-outline"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mt-3">
+                                    <p class="text-muted mb-2">450 kr</p>
+                                    <h5 class="mb-0 mt-2"><span class="text-muted me-2"><del
+                                                class="font-size-16 fw-normal">$500</del></span>$450</h5>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="mt-3">
+                                    <p class="text-muted mb-2">Quantity</p>
+                                    <div class="d-inline-flex">
+                                        <select class="form-select form-select-sm w-xl">
+                                            <option value="1">1</option>
+                                            <option value="2" selected="">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="mt-3">
+                                    <p class="text-muted mb-2">Total</p>
+                                    <h5>400 kr</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- end card -->
+
+
+
+
+            <div class="row my-4">
+                <div class="col-sm-6">
+                    <a href="ecommerce-products.html" class="btn btn-dark btn_checkout flex-shrink-0 ms-2 shadow-0 ">
+                        <i class="bi bi-arrow-left me-1"></i> Continue Shopping </a>
+                </div> <!-- end col -->
+                <div class="col-sm-6">
+                    <div class="text-sm-end mt-2 mt-sm-0">
+                        <a href="ecommerce-checkout.html" class="btn btn-dark btn_checkout flex-shrink-0 ms-2 shadow-0">
+                            <i class="mdi mdi-cart-outline me-1"></i> Checkout </a>
+                    </div>
+                    <button type="submit" name="items[]" value="{{ all_the_item.pk }}"
+                      class="btn btn-dark btn_checkout flex-shrink-0  ms-2  {% if all_the_item.is_out_of_stock %}disabled{% endif %}">
+                      <i class="bi bi-bag-plus"></i> Checkout</button>
+
+                </div> <!-- end col -->
+            </div> <!-- end row-->
+        </div>
+
+        <div class="col-xl-4">
+            <div class="mt-5 mt-lg-0">
+                <div class="card border shadow-none">
+                    <div class="card-header bg-transparent border-bottom py-3 px-4">
+                        <h5 class="font-size-16 mb-0">Order Summary <span class="float-end">#MN0124</span></h5>
+                    </div>
+                    <div class="card-body p-4 pt-2">
+
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td>Sub Total :</td>
+                                        <td class="text-end">$ 780</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Discount : </td>
+                                        <td class="text-end">- $ 78</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Shipping Charge :</td>
+                                        <td class="text-end">$ 25</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Estimated Tax : </td>
+                                        <td class="text-end">$ 18.20</td>
+                                    </tr>
+                                    <tr class="bg-light">
+                                        <th>Total :</th>
+                                        <td class="text-end">
+                                            <span class="fw-bold">
+                                                $ 745.2
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end table-responsive -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+</div>
+
+<!-- cart.html -->
+<div class="container pt-5">
+    <div class="row pt-5">
+        <div class="col-xl-8">
+            <h1>Shopping Cart</h1>
+            <div class="card border shadow-none pt-3 pb-3">
+                <div class="d-flex align-items-start border-bottom pb-3">
+                    <div class="me-4">
+                        <img src="#" alt="" class="avatar-lg rounded">
+                    </div>
+                    <div class="flex-grow-1 align-self-center overflow-hidden">
+                        <div>
+                            <h5><a href="#" class="text-capitalize text-black ">testing
+                                </a></h5>
+                            <p class="text-muted mb-0">
+                                <i class="bi bi-star  text-warning"></i>
+                                <i class="bi bi-star  text-warning"></i>
+                                <i class="bi bi-star  text-warning"></i>
+                                <i class="bi bi-star  text-warning"></i>
+                                <i class="bi bi-star-half text-warning"></i>
+                            </p>
+                            
+                        </div>
+                    </div>
+                    <div class="card-body col-sm-8 ">
+                        {% for item in cart_items %}
+                        <div class="cart-item">
+                            <p>{{ item.name }} - ${{ item.price }}</p>
+                            <!-- Add a form to remove the item from the cart -->
+                            <form method="post" action="{% url 'remove_from_cart' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                <button type="submit">Remove</button>
+                            </form>
+                        </div>
+                        {% empty %}
+                        <p class="col-md-12 text-end ">Your cart is empty.</p>
+                        {% endfor %}
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 text-center">
+                        <div class="mt-3">
+                            
+                            <h5 class="mb-0 mt-2"><span class="text-muted me-2"></span>150 kr</h5>
+                        </div>
+                     </div>
+                     <div class="col-md-2">
+                        <div class="mt-3">
+                            <p class="text-muted mb-2">Quantity</p>
+                            <div class="d-inline-flex">
+                                <select class="form-select form-select-sm w-xl">
+                                    <option value="1">1</option>
+                                    <option value="2" selected="">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 text-center">
+                        <div class="mt-3">
+                            <p class="text-muted mb-2">Total</p>
+                            <h5>{{ price }} kr</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-4">
+                <div class="col-sm-6">
+                    <a href="{% url 'store' %}" class="btn btn-dark btn_checkout flex-shrink-0 ms-2 shadow-0 ">
+                        <i class="bi bi-arrow-left me-1"></i> Continue Shopping </a>
+                </div> <!-- end col -->
+                <div class="col-sm-6">
+                    <div class="text-sm-end mt-2 mt-sm-0">
+                        <a href="#" class="btn btn-dark btn_checkout flex-shrink-0 ms-2 shadow-0">
+                            <i class="mdi mdi-cart-outline me-1"></i> Checkout </a>
+                    </div>
+                    <button type="submit" name="items[]" value="{{ all_the_item.pk }}"
+                      class="btn btn-dark btn_checkout flex-shrink-0  ms-2  {% if all_the_item.is_out_of_stock %}disabled{% endif %}">
+                      <i class="bi bi-bag-plus"></i> Checkout</button>
+
+                </div> <!-- end col -->
+            </div> 
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+<div class="container py-5 mt-5">
+    <h2>Your Cart</h2>
+    <table class="table mt-3">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Item</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart_items %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{ item.name }}</td>
+          <td>{{ item.price }} kr</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3">Your cart is empty.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="text-end">
+      <a href="{% url 'store' %}" class="btn btn-primary mt-3">Continue Shopping</a>
+      <!-- Add checkout button or form here -->
+    </div>
+  </div>
+
+{% endblock content %}

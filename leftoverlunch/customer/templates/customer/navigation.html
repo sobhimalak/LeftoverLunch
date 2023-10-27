@@ -1,31 +1,143 @@
-  
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-inverse text-uppercase">
-    <div class="container-fluid">
-      <!--<a class="navbar-brand" href="{% url 'index' %}">LEFTOVER</a>-->
-      {% load static %}
-      <a href="{% url 'index' %}"><img  src="https://camo.githubusercontent.com/a0fd8366fbe4d266fecccc5d71a529c42914a30d16ab325e6f16d21ba758f383/68747470733a2f2f636c6f7564756c752e636f6d2f77702d636f6e74656e742f75706c6f6164732f323032332f30392f6c6f672e706e67" height="35" loading="lazy" /></a>
+{% load static %}
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-inverse text-uppercase scrolling-navbar">
+    <div class="container-fluid">
+      <div class="justify-content-center ">
+        <a href="{% url 'index' %}">
+          <img src="https://cloudulu.com/wp-content/uploads/2023/10/logo.2.0.png" height="45" loading="lazy" /></a>
+        </div>
+        <!-- Toggle button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="collapse navbar-collapse " id="navbarTogglerDemo01">
         <div class="navbar-nav">
-          <a class="nav-link" href="#{% url 'about' %}">About</a>
-          <a class="nav-link" href="{% url 'order' %}">Place an Order</a>
+          <!-- <a class="nav-link text-light" href="{% url 'about' %}">About</a> -->
+          <a class="nav-link text-light" href="{% url 'order' %}">Menu</a>
         </div>
+        
+    
+      <div class="d-flex justify-content-center h-100 ps-lg-5">
+      <form method="GET" action="{% url 'order' %}">
+        <div class="searchbar">
+          <input class="search_input" name="q" type="text" placeholder="Search Our Menu..." value="{{ request.GET.q }}">
+          <a class="search_icon"><i class="bi bi-search"></i></a>
+        </div>
+      </form>
       </div>
+    </div>
+      
       <div class="d-flex align-items-center">
-        <!-- Cart -->
-              <div class="cart">
-                  <div class="cart_container d-flex flex-row align-items-center justify-content-end">
-                      <div class="cart_icon"><i class="bi bi-bag text-light" style="font-size: 1.5rem;"></i>
-                          <div class="cart_count"><span></span></div>
-                      </div>
-                      <div class="cart_content">
-                          <div class="cart_price"></div>
-                      </div>
-                  </div>
+         <!-- LogOut & LogIn Icon -->
+    <!-- --------------------------- -->
+    <ul class="navbar-nav nav-flex-icons align-items-center flex-row">
+      {% if request.user.is_authenticated %}
+      <li class="nav-item">
+        <div class="cart">
+          <div class="cart_container d-flex flex-row align-items-center justify-content-end">
+              <div class="cart_icon"><i class="bi bi-bag text-light" style="font-size: 1.5em;"></i>
+                  <div class="cart_count"><span></span></div>
               </div>
+              <div class="cart_content">
+                  <div class="cart_price"></div>
+              </div>
+          </div>
+      </div>
+        <li class="nav-item">
+          <a class="nav-link waves-effect" href="{% url 'account_logout' %}">
+            <span class="badge pe-0"> {{ request.user }}</span>
+            <span > <!-- Logout icon -->
+              <i class="bi bi-person-x text-light" style="font-size: 1.5rem;"></i> 
+            </span> 
+          </a>
+        </li>
+          
+      </li>
+      
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link waves-effect" href="{% url 'account_login' %}">
+          <span class="clearfix d-none d-sm-inline-block"><i class="bi bi-person text-light animated-icon" style="font-size: 1.5rem;"></i></span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-effect" href="{% url 'account_signup' %}">
+          <!-- <span class="clearfix d-none d-sm-inline-block"><i class="bi bi-person-plus text-light" style="font-size: 1.5rem;"></i></span> -->
+        </a>
+      </li>
+      {% endif %}
+    </ul>
     </div>
     </div>
   </nav>
+
+  <style>
+    .searchbar{
+        margin-bottom: auto;
+        margin-top: auto;
+        height: 62px;
+        background-color: #20272d;
+        border-radius: 35px;
+        padding: 10px;
+        }
+    
+        .search_input{
+        color: #F5F5F7;
+        border: 0;
+        outline: 0;
+        background: none;
+        width: 0;
+        caret-color:transparent;
+        line-height: 40px;
+        transition: width 0.4s linear;
+        }
+    
+        .searchbar:hover > .search_input{
+        padding: 0 10px;
+        width: 450px;
+        caret-color:#ae83f7;
+        transition: width 0.4s linear;
+        }
+    
+        .searchbar:hover > .search_icon{
+        background: #F5F5F7;
+        color: #000;
+        }
+    
+        .search_icon{
+        height: 40px;
+        width: 40px;
+        float: right;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        color:#F5F5F7;
+        text-decoration:none;
+        }
+
+        .navbar-scrolled {
+          background-color: #28333dff;
+          transition: background-color 200ms linear;
+        }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    var scroll_start = 0;
+    var startchange = $('.scrolling-navbar');
+    var offset = startchange.offset();
+
+    if (startchange.length) {
+      $(document).scroll(function() {
+        scroll_start = $(this).scrollTop();
+        if (scroll_start > offset.top) {
+          $('.scrolling-navbar').addClass('navbar-scrolled');
+        } else {
+          $('.scrolling-navbar').removeClass('navbar-scrolled');
+        }
+      });
+    }
+  });
+</script>

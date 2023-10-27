@@ -7,6 +7,10 @@ for the admin page:
 User: admin
 password: admin12345
 
+for the mysql database:
+User: admin
+password: admin12345
+
 * To Run the application
 
 1. activate the virtual environment
@@ -21,3 +25,10 @@ Activate the virtual environment
 
 4. run the application
 ```python manage.py runserver```
+
+5. This is how you do migrations    
+```python manage.py makemigrations```
+```python manage.py migrate```
+
+6. Create a superuser
+```python manage.py createsuperuser```

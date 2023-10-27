@@ -1,0 +1,35 @@
+{% extends 'customer/base.html' %}
+
+{% block content %}
+
+<section class="h-100 h-custom py-5 pt-5">
+  <div class="container py-5  h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100 pt-5">
+      <div class="col-12">
+        <div class="card white_color" style="border-radius: 15px;">
+          <div class="card-bodyp-0">
+            <div class="row g-0">
+              
+                <div class="p-5">
+                  
+                    <div class="col-md-12 col-sm-12 p-4 text-center">
+                      <h1>Payment Submitted!</h1>
+                      <h4 class="badge badge-dark text-light rounded-8 mb-3 me-2">Order # {{ pk }}</h4>
+                      <br>
+                      <i class="bi bi-cash-coin text-success"></i> Great value <br>
+                      <i class="bi bi-clock-history text-success"></i> Quick collection <br>
+                      <i class="bi bi-emoji-smile text-success "></i> Delicious food
+                     
+                  <hr class="my-4">
+                  <p class="mb-0 fw-bold">What you need to know</p>
+                  <p>The store provide packaging for your food, but please bring your own bag to carry it home in.</p>
+                  <a class="btn btn-dark btn_store w-75" href="{% url 'index' %}">Go to the homepage</a>
+          </div>
+        </div>
+      </div>
+    </div>
+   </div>
+  </div>
+</section>
+
+{% endblock content %}

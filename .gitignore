@@ -3,5 +3,11 @@
 /Mall_Iterationsrapport_The_Leftovers.ods
 /~$Mall_Iterationsrapport_The_Leftovers.ods
 
-# ignore the virtual environment
-/Django_venv
+*.pyc
+leftoverlunch/leftoverlunch/__pycache__/
+.vscode/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
