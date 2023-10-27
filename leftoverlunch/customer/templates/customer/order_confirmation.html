@@ -1,23 +1,150 @@
 {% extends 'customer/base.html' %}
 
 {% block content %}
-<div class="container mb-5 col-lg-6">
-    <div class="card shadow-lg row justify-content-center mt-5">
-        <div class="card-body p-5 col-sm-12 p-4 text-center">
-            <h1>Order Submitted!</h1>
-            <p>You should receive a confirmation email soon.</p>
-            <a class='btn btn-outline-black' href="{% url 'index' %}">Go to the homepage</a>
-        </div>
-    </div>
 
-    <div class="card shadow-lg row justify-content-center mt-5">
-        <div class="col-sm-12 text-center p-5">
-            <h3 class="pb-3 ">Order Summary:</h3>
-            {% for item in items %}
-                <p>{{ item.name }} <span class="pl-3">{{ item.price }} kr</span></p>
-            {% endfor %}    
-            <p class="font-weight-bold pt-4">Total: {{ price }} kr</p>
+<section class="h-100 h-custom pt-5">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12">
+          <div class="card white_color" style="border-radius: 15px;">
+            <div class="card-bodyp-0">
+              <div class="row g-0">
+                <div class="col-lg-8">
+                  <div class="p-5">
+                    <div class="d-flex justify-content-between align-items-center mb-5">
+                      <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
+                      {% for item in items.all %}
+                      <h6 class="badge badge-info text-dark rounded-8 mb-3 me-2">Order # {{ pk }}</h6>
+                      
+                    </div>
+                    <hr class="my-4">
+  
+                    <div class="row mb-4 d-flex justify-content-between align-items-center">
+                        
+                      <div class="col-md-3 col-lg-3 col-xl-3">
+                        <h4 class="text-black text-capitalize">{{ item.name }}</h4>
+                        <h6 class="text-black mb-0"></h6>
+                      </div>
+                      <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                        <h6 class="mb-0">{{ item.price }} kr</h6>
+                      </div>
+                    </div>
+                    {% endfor %}
+                    <hr class="my-4">
+  
+  
+                    <div class="pt-5">
+                      <h6 class="mb-0"><a href="{% url 'index' %}" class="text-body"><i
+                            class="bi bi-arrow-left me-2"></i>Back to shop</a></h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 bg-grey">
+                  
+                  <div class="p-5">
+                    <h3 class="fw-bold">Summary</h3>
+
+                    <hr class="my-4">
+  
+                    <div class="d-flex justify-content-between mb-5">
+                      <h5 class="text-uppercase">Total price</h5>
+                      <h5>{{ price }} kr</h5>
+                    </div>
+                       <div id="paypal-button"</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
+      </div>
+     </div>
+
+
+     
+  </section>
+
+
+  <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<script>
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+  paypal.Button.render({
+    // Configure environment
+    env: 'sandbox',
+    client: {
+      sandbox: 'AVyfTZrp7PuwwZ8bobyo3ogpA-JyH4dK7rarJ1-ynVcIGjl6SBK1iz5JVafhRsypKU_6Zy8yi_16QDYD',
+      production: 'demo_production_client_id'
+    },
+    // Customize button (optional)
+    locale: 'sv_SE',
+    style: {
+      size: 'responsive' ,
+      color: 'black',
+      shape: 'pill',
+    },
+
+    // Enable Pay Now checkout flow (optional)
+    commit: true,
+
+    // Set up a payment
+    payment: function(data, actions) {
+      return actions.payment.create({
+        transactions: [{
+          amount: {
+            total: '{{ price }}',
+            currency: 'SEK'
+          }
+        }]
+      });
+    },
+    onAuthorize: function(data, actions) {
+      // Redirect to the order confirmation view after payment authorization
+      window.location.href = "{% url 'payment-confirmation' pk %}";
+
+      return actions.payment.execute().then(function() {
+        // Show a confirmation message to the buyer
+        $.ajax({
+            type: 'POST',
+            url: confirmationUrl,
+            beforeSend: function(request) {
+                request.setRequestHeader('X-CSRFToken', csrftoken);
+            },
+            data: JSON.stringify({'isPaid': true}),
+            success: function(data) {
+                console.log("AJAX Response: ", data);
+                window.location.href = '/payment-confirmation/';
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error: ", error);
+                // Handle AJAX errors if necessary
+            }
+        });
+    });
+},
+}, '#paypal-button');
+   
+
+
+  
+
+  
+
+</script>
+
 {% endblock content %}
