@@ -2,7 +2,66 @@
   {% block content %}
 
   <form method="POST">
-    
+    <div class="container py-5 mt-5">
+      <!---============== Entre ==================-->
+      <header class="section-header text-center">
+        <span class="display-5 text-uppercase">All the items</span>
+      </header>
+      <div class="row col-auto justify-content-center ">
+        {% csrf_token %}
+        <!---==============  ==================-->
+        {% for all_the_item in all_items %}
+          <div class="card bg-transparent border-0 mt-5 " style="width: 25rem;">
+            <img src="{{ all_the_item.imageURL }}" class="card-img-top" alt="...">
+            {% if all_the_item.is_out_of_stock %}
+            <div class="badge badge-black rounded-8 m-3 position-absolute" style="background:rgb(183, 51, 51);" >{{ all_the_item.stock }} left</div>
+            {% else %}
+              {% if entre.stock == 0 %}
+                <p class="text-warning">Limited Stock</p>
+              {% else %}
+            <div class="badge badge-light text-dark rounded-8 m-3 position-absolute">{{ all_the_item.stock }} left</div>
+            {% endif %}
+            {% endif %}
+            <div class="card-body bg-white">
+              <div class="d-flex flex-row justify-content-between mb-0">
+                <h5 class="text-capitalize">{{ all_the_item.name }}</h5>
+                <h6>{{ all_the_item.price }} kr</h6>
+              </div>
+              <hr class="mt-0">
+              <div class="d-flex flex-row justify-content-between py-3">
+                <div class="d-flex flex-column"><span class="text-muted"><i class="bi bi-clock"></i> Collect : {{ all_the_item.collect_time_start }} - {{ all_the_item.collect_time_end }}</span>
+                  <span class="text-muted"><i class="bi bi-geo-alt"></i><a href="{{ all_the_item.store_location.store_link }}" class="text-muted link-dark" target="_blank"> {{ all_the_item.store_location.name }}</a></span>
+                  <div class="d-flex mt-3 ">
+                    {% for allergen in all_the_item.allergy.all|slice:":4" %}
+                      <h5 class="badge badge-danger text-dark rounded-8 mb-3 me-2">{{ allergen.name }}</h5>
+                    {% empty %}
+                      <p>No allergies</p>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="d-flex flex-column"><small class="badge btn_store text-light rounded-8 mb-2">{{ all_the_item.collect_day }}</small>
+                </div>
+              </div>
+              <p class="card-text">{{ all_the_item.description }}</p>
+              
+
+              <div style="text-align: end;">
+                <!---======= Details btn ========-->
+                <a href="{% url 'single-page' %}" class="btn btn-dark btn_store flex-shrink-0 rounded-8 shadow-0 pe-3 ps-3">
+                  <i class="bi bi-info-square"></i>
+                </a>
+              
+                  <!---======= ADD TO CART btn ========-->  
+                 <button type="submit" name="items[]" value="{{ all_the_item.pk }}"
+                  class="btn btn-dark btn_store flex-shrink-0 ms-2 rounded-8 shadow-0{% if all_the_item.is_out_of_stock %} disabled{% endif %}">
+              <i class="bi bi-bag-plus"></i> Reserve</button>     
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      </div>
       <!---============== Appetizers ==================-->
       <div class="container py-5 mt-5">
       <header class="section-header text-center">

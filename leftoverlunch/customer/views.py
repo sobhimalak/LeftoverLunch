@@ -21,17 +21,18 @@ class About(View):
 
 class SinglePage(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'customer/single_page.html')
+        return render(request, 'customer/single-page.html')
     
 class Register(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'customer/register.html')
 
 
+
 class Order(View):
     def get(self, request, *args, **kwargs):
         query = request.GET.get("q")
-        
+
         # get every item from each category and apply search filter if query is present
         all_items = MenuItem.objects.filter(
             Q(name__icontains=query) |
@@ -39,13 +40,13 @@ class Order(View):
             Q(description__icontains=query)
         ) if query else MenuItem.objects.all()
         
+        print("SQL Query:", all_items.query)
+
         # get every item from each category
-        all_items = MenuItem.objects.all()
         appetizers = MenuItem.objects.filter(category__name__contains='Appetizer')
         entres = MenuItem.objects.filter(category__name__contains='Entre', stock__gt=0)
         desserts = MenuItem.objects.filter(category__name__contains='Dessert', stock__gt=0)
         drinks = MenuItem.objects.filter(category__name__contains='Drink', stock__gt=0)
-        
         store_location = StoreLocation.objects.first()
 
         # pass into context

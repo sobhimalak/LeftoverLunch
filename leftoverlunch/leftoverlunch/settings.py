@@ -56,7 +56,7 @@ ROOT_URLCONF = 'leftoverlunch.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join( BASE_DIR, 'templates' )],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -166,3 +166,5 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 PAYPAL_RECEIVER_EMAIL = 'sb-r614m27817712@business.example.com'
 PAYPAL_TEST = True
+
+
