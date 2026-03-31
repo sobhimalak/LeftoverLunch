@@ -3,7 +3,7 @@ services:
     name: leftoverlunch
     env: python
     buildCommand: "./render_build.sh"
-    startCommand: "gunicorn leftoverlunch.wsgi:application"
+    startCommand: "gunicorn --pythonpath leftoverlunch leftoverlunch.wsgi:application"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
