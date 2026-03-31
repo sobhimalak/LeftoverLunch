@@ -1,0 +1,117 @@
+{% extends "lunch_manager/base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section text-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="badge bg-accent bg-opacity-10 text-accent px-3 py-2 rounded-pill mb-4">
+                    <i class="bi bi-stars me-2"></i>Fighting Food Waste Together
+                </div>
+                <h1 class="hero-title">Delicious Meals,<br>Zero Waste.</h1>
+                <p class="lead text-secondary mb-5 mx-auto" style="max-width: 600px;">
+                    Join the community of Waste Warriors. Rescue surplus food from your favorite local spots and enjoy high-quality meals at a fraction of the cost.
+                </p>
+                <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                    <a href="{% url 'order' %}" class="btn btn-modern">Order Your Lunch Now</a>
+                    <button onclick="toggleExplainer()" class="btn btn-outline-light rounded-pill px-5">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-primary-light bg-opacity-50">
+    <div class="container py-5">
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-4">
+                <div class="card-modern">
+                    <div class="icon-box-modern mb-4">
+                        <i class="bi bi-lightning-charge text-accent fs-2"></i>
+                    </div>
+                    <h4 class="h5 mb-3">Easy To Order</h4>
+                    <p class="text-secondary small">Effortless ordering with a seamless shopping experience and secure, hassle-free payments.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-modern border-accent border-opacity-25">
+                    <div class="icon-box-modern mb-4">
+                        <i class="bi bi-leaf text-accent fs-2"></i>
+                    </div>
+                    <h4 class="h5 mb-3">Sustainability</h4>
+                    <p class="text-secondary small">Redefining the future of food by nourishing communities and preserving our planet's resources.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-modern">
+                    <div class="icon-box-modern mb-4">
+                        <i class="bi bi-shield-check text-accent fs-2"></i>
+                    </div>
+                    <h4 class="h5 mb-3">Quality Guaranteed</h4>
+                    <p class="text-secondary small">Carefully curated meals from trusted partners, ensuring you never compromise on taste.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- CTA Section -->
+<section class="py-5">
+    <div class="container py-5">
+        <div class="glass p-5 rounded-fill-custom text-center shadow-lg border-accent border-opacity-10">
+            <h2 class="h1 fw-bold mb-4 font-outfit">Ready to become a Waste Warrior?</h2>
+            <p class="text-secondary mb-5 mx-auto" style="max-width: 500px;">
+                Start your journey towards a more sustainable and delicious lifestyle today.
+            </p>
+            <a href="{% url 'account_signup' %}" class="btn btn-modern btn-lg px-5">Join Now</a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .font-outfit { font-family: 'Outfit', sans-serif; }
+    
+    .icon-box-modern {
+        width: 60px;
+        height: 60px;
+        background: rgba(16, 185, 129, 0.1);
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .divider-modern {
+        width: 80px;
+        height: 4px;
+        background: var(--accent);
+        border-radius: 2px;
+    }
+
+    .rounded-fill-custom {
+        border-radius: 3rem;
+    }
+
+    .glass-blob {
+        width: 300px;
+        height: 300px;
+        background: var(--accent);
+        filter: blur(120px);
+        opacity: 0.15;
+        border-radius: 50%;
+    }
+
+    @media (max-width: 768px) {
+        .rounded-fill-custom {
+            border-radius: 1.5rem;
+            padding: 3rem 1.5rem !important;
+        }
+    }
+</style>
+{% endblock content %}
+
+
+

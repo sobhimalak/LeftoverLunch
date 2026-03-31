@@ -1,4 +1,4 @@
-#!/Users/sobhione/Documents/JENSENS-SCHOOL/LeftoverLunch/Django_venv/bin/python3
+#!/Users/sobhione/Documents/JENSENS-SCHOOL/LeftoverLunch/Django_venv/bin/python3.11
 # -*- coding: utf-8 -*-
 import re
 import sys

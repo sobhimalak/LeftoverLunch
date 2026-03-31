@@ -1,0 +1,270 @@
+{% extends 'lunch_manager/base.html' %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-8 mt-16 lg:mt-20 lg:px-6 animate-entrance">
+    <!-- Compact Header -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="font-outfit text-2xl lg:text-3xl font-extrabold text-rose tracking-tight">Review Order</h1>
+            <p class="text-white/40 text-xs font-medium">Order ID: #{{ pk }}</p>
+        </div>
+        <a href="{% url 'order' %}" class="glass border-rose/10 text-rose/60 hover:text-rose px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all no-underline">
+            <i data-lucide="chevron-left" class="w-3 h-3 inline mr-1"></i> Back to Menu
+        </a>
+    </div>
+
+    <div class="checkout-grid-compact">
+        <!-- Receipt Side -->
+        <div class="space-y-4">
+            <div class="card-modern glass p-6 bg-midnight-light/20">
+                <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/5">
+                    <h3 class="font-outfit text-base font-bold text-white flex items-center gap-2">
+                        <i data-lucide="shopping-cart" class="w-4 h-4 text-rose"></i>
+                        Summary
+                    </h3>
+                    <span class="text-white/30 text-[9px] font-black uppercase tracking-widest">{{ items.all|length }} Items</span>
+                </div>
+                
+                <div class="space-y-1 max-h-[400px] overflow-y-auto pr-2 scrollbar-hide">
+                    {% for item in items %}
+                    <div class="product-row-compact group" id="item-row-{{ item.pk }}">
+                        <img src="{{ item.item.imageURL }}" alt="{{ item.item.name }}">
+                        <div class="flex-grow min-w-0">
+                            <h6 class="text-white font-bold text-sm tracking-tight truncate">{{ item.item.name }}</h6>
+                            <p class="text-[10px] text-rose/50 font-medium flex items-center gap-1">
+                                <i data-lucide="clock" class="w-2.5 h-2.5"></i> {{ item.item.collect_time_start }}
+                            </p>
+                        </div>
+                        
+                        <div class="flex items-center mx-4 bg-midnight/60 border border-white/5 rounded-full p-0.5 scale-90">
+                            <button class="w-6 h-6 flex items-center justify-center rounded-full hover:bg-rose/20 text-white/40 hover:text-rose transition-all quantity-btn" 
+                                    data-id="{{ item.pk }}" data-action="minus">
+                                <i data-lucide="minus" class="w-2.5 h-2.5"></i>
+                            </button>
+                            <span class="text-[10px] font-bold px-3 text-white" id="qty-{{ item.pk }}">{{ item.quantity }}</span>
+                            <button class="w-6 h-6 flex items-center justify-center rounded-full hover:bg-rose/20 text-white/40 hover:text-rose transition-all quantity-btn" 
+                                    data-id="{{ item.pk }}" data-action="plus">
+                                <i data-lucide="plus" class="w-2.5 h-2.5"></i>
+                            </button>
+                        </div>
+
+                        <div class="text-right min-w-[80px]">
+                            <span class="text-rose font-outfit font-extrabold text-sm block" id="total-{{ item.pk }}">{{ item.total_price }} kr</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Pickup Address -->
+            <div class="card-modern glass p-6 bg-midnight-light/20">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-outfit text-base font-bold text-white flex items-center gap-2">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-rose"></i>
+                        Pickup Address
+                    </h3>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-white/20"></i>
+                </div>
+                <div class="flex items-center gap-4 bg-midnight/40 p-4 rounded-2xl border border-white/5">
+                    <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center border border-white/10">
+                        <i data-lucide="map" class="w-6 h-6 text-rose"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <h6 class="text-white font-bold text-sm tracking-tight">{{ order.order_items.first.item.store_location.address|default:"Norrtullsgatan 4" }}</h6>
+                        <p class="text-[10px] text-white/40 font-medium lowercase tracking-widest">{{ order.order_items.first.item.store_location.city|default:"Stockholm" }}</p>
+                    </div>
+                    <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                        <i data-lucide="check" class="w-3.5 h-3.5 text-midnight"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="card-modern glass p-6 bg-midnight-light/20">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-outfit text-base font-bold text-white flex items-center gap-2">
+                        <i data-lucide="credit-card" class="w-4 h-4 text-rose"></i>
+                        Payment Method
+                    </h3>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-white/20"></i>
+                </div>
+                <div class="flex items-center gap-4 bg-midnight/40 p-4 rounded-2xl border border-white/5">
+                    <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center border border-white/10 overflow-hidden p-2">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" class="w-full h-full object-contain filter invert opacity-80">
+                    </div>
+                    <div class="flex-grow">
+                        <h6 class="text-white font-bold text-sm tracking-tight">Visa Classic</h6>
+                        <p class="text-[10px] text-white/40 font-medium lowercase tracking-widest">**** 7690</p>
+                    </div>
+                    <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                        <i data-lucide="check" class="w-3.5 h-3.5 text-midnight"></i>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Total Breakdown -->
+            <div class="card-modern glass p-6 bg-rose/5 border-rose/10">
+                <div class="flex justify-between items-center text-xs font-bold mb-2">
+                    <span class="text-white/30 uppercase tracking-widest">Subtotal</span>
+                    <span class="text-white order-total-display">{{ price }} kr</span>
+                </div>
+                <div class="flex justify-between items-center text-[10px] font-bold mb-4">
+                    <span class="text-white/30 uppercase tracking-widest">Service Fee</span>
+                    <span class="text-green-400">FREE</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="font-outfit font-bold text-white text-lg">Total Amount</span>
+                    <span class="text-rose font-outfit font-black text-3xl tracking-tighter order-total-display">{{ price }} kr</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Side -->
+        <div class="sticky top-24">
+            <div class="card-modern glass p-6 border-rose/20 bg-midnight-light/40">
+                <h3 class="font-outfit text-base font-bold text-white mb-6 flex items-center gap-2">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-rose"></i>
+                    Secure Payment
+                </h3>
+                
+                <div id="stripe-container" class="space-y-6">
+                    <div>
+                        <label class="block text-[9px] font-black text-white/30 uppercase tracking-widest mb-2">Card Details</label>
+                        <div id="card-element" class="bg-white/5 border border-white/5 p-3 rounded-xl focus-within:border-rose/50 transition-all">
+                        </div>
+                        <div id="card-errors" role="alert" class="text-rose text-[9px] font-bold uppercase mt-2"></div>
+                    </div>
+                    
+                    <button id="submit-payment" class="btn-modern w-full py-3 h-12 shadow-rose-500/20">
+                        <span id="button-text" class="flex items-center gap-2">
+                            Pay & Confirm
+                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        </span>
+                        <div class="hidden" id="spinner">
+                            <div class="animate-spin rounded-full h-4 w-4 border-2 border-midnight border-t-transparent"></div>
+                        </div>
+                    </button>
+                    
+                    <div class="flex items-center justify-center gap-2 text-[9px] font-black text-white/10 uppercase tracking-widest">
+                        <i data-lucide="lock" class="w-3 h-3"></i>
+                        256-bit Encryption
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Stripe JS -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    // Initialize Stripe (Demo Key)
+    const stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+    const elements = stripe.elements();
+
+    const style = {
+        base: {
+            color: '#F5E9E7',
+            fontFamily: '"Outfit", sans-serif',
+            fontSmoothing: 'antialiased',
+            fontSize: '15px',
+            '::placeholder': {
+                color: 'rgba(245, 233, 231, 0.2)',
+            },
+        },
+        invalid: {
+            color: '#ECC5C6',
+            iconColor: '#ECC5C6',
+        },
+    };
+
+    const card = elements.create('card', { style: style, hidePostalCode: true });
+    card.mount('#card-element');
+
+    function updateQuantity(orderItemId, action) {
+        fetch("{% url 'update-order-item-quantity' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                order_item_id: orderItemId,
+                action: action
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                if (data.new_quantity === 0) {
+                    const row = document.getElementById(`item-row-${orderItemId}`);
+                    if (row) {
+                        row.classList.add('opacity-0', '-translate-x-12');
+                        setTimeout(() => row.remove(), 400);
+                    }
+                } else {
+                    const qtyEl = document.getElementById(`qty-${orderItemId}`);
+                    const totalEl = document.getElementById(`total-${orderItemId}`);
+                    if (qtyEl) qtyEl.innerText = data.new_quantity;
+                    if (totalEl) totalEl.innerText = data.new_item_total.toFixed(2) + ' kr';
+                }
+                
+                // Update Order Totals
+                document.querySelectorAll('.order-total-display').forEach(el => {
+                    el.innerText = data.new_order_total.toFixed(2) + ' kr';
+                });
+
+                // If no items left, redirect back
+                if (data.new_order_total === 0) {
+                    window.location.href = "{% url 'order' %}";
+                }
+            }
+        });
+    }
+
+    // Event Delegation for Quantity Buttons
+    document.addEventListener('click', function(e) {
+        const btn = e.target.closest('.quantity-btn');
+        if (btn) {
+            const id = btn.getAttribute('data-id');
+            const action = btn.getAttribute('data-action');
+            updateQuantity(id, action);
+        }
+    });
+
+    const form = document.getElementById('submit-payment');
+    form.addEventListener('click', function(ev) {
+        ev.preventDefault();
+        
+        // Show loading
+        const btn = document.getElementById('submit-payment');
+        const spinner = document.getElementById('spinner');
+        const buttonText = document.getElementById('button-text');
+        
+        btn.classList.add('pointer-events-none', 'opacity-80');
+        spinner.classList.remove('hidden');
+        buttonText.innerText = 'Processing Order...';
+
+        // Simulate Stripe Payment for Demo
+        setTimeout(() => {
+            fetch("{% url 'order-confirmation' pk %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ isPaid: true })
+            }).then(response => {
+                window.location.href = "{% url 'payment-confirmation' pk %}";
+            });
+        }, 2000);
+    });
+
+    // Initialize icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+</script>
+{% endblock content %}

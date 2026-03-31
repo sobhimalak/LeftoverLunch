@@ -1,0 +1,47 @@
+{% extends 'lunch_manager/base.html' %}
+{% block content %}
+
+<div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="glass p-5 rounded-4 text-center">
+                <div class="icon-box-modern mx-auto mb-4" style="width: 80px; height: 80px;">
+                    <i class="bi bi-credit-card fs-1 text-accent"></i>
+                </div>
+                <h1 class="h2 fw-bold font-outfit mb-4">Complete Your Rescue</h1>
+                <p class="text-secondary mb-5">
+                    Thank you for joining the fight against food waste! Please review your order details and confirm to proceed.
+                </p>
+                
+                <div class="bg-primary-light bg-opacity-25 p-4 rounded-3 border border-white border-opacity-10 mb-5 text-start">
+                    <h3 class="h6 fw-bold text-uppercase letter-spacing-wide mb-3 text-secondary">Order Confirmation</h3>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Items rescued:</span>
+                        <span class="text-light">{{ cart_items|length }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-0">
+                        <span class="fw-bold text-light">Total to pay:</span>
+                        <span class="fw-bold text-accent fs-5">{{ price }} kr</span>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-column gap-3">
+                    <button class="btn btn-modern btn-lg rounded-pill py-3">
+                        Confirm and Reserve Meals
+                    </button>
+                    <a href="{% url 'cart' %}" class="btn btn-outline-light rounded-pill py-3">
+                        Back to Cart
+                    </a>
+                </div>
+                
+                <div class="mt-5 pt-4 border-top border-white border-opacity-10">
+                    <p class="small text-secondary mb-0">
+                        <i class="bi bi-shield-lock me-2"></i>Secure Checkout Powered by LeftoverLunch
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

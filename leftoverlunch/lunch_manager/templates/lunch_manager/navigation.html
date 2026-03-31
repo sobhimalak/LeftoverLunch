@@ -1,0 +1,79 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg fixed-top navbar-modern z-50">
+    <div class="container">
+        <div class="navbar-container-modern shadow-2xl flex items-center w-full px-4 lg:px-6 py-2">
+            <!-- Brand & Integrated Categories -->
+            <div class="flex items-center overflow-hidden flex-grow">
+                <div class="brand-wrapper mr-6">
+                    <a class="navbar-brand flex items-center no-underline" href="{% url 'index' %}">
+                        <span class="font-outfit font-extrabold text-rose text-xl lg:text-2xl tracking-tighter uppercase mb-0">LEFTOVERS</span>
+                    </a>
+                </div>
+
+                <!-- Category Slot (Visible on Scroll) -->
+                <div class="category-nav-integrated">
+                    {% block navbar_categories %}{% endblock %}
+                </div>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <button class="navbar-toggler border-0 ml-auto order-last text-rose lg:hidden hover:scale-110 transition-transform" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+
+            <div class="collapse navbar-collapse flex-grow-0" id="navbarMain">
+                <!-- Action Group -->
+                <div class="flex items-center ml-auto gap-4 lg:gap-6 mt-4 lg:mt-0">
+                    <!-- Search Toggle or Input (Simplified for Density) -->
+                    <div class="hidden lg:flex items-center bg-white/5 border border-white/10 rounded-full px-3 py-1.5 focus-within:border-rose/50 transition-all group">
+                        <i data-lucide="search" class="w-3.5 h-3.5 text-rose/50 group-focus-within:text-rose mr-2"></i>
+                        <form method="GET" action="{% url 'order' %}">
+                            <input class="bg-transparent border-none text-white text-xs w-24 lg:w-32 outline-none placeholder-white/20" name="q" type="text" placeholder="Quick find..." value="{{ request.GET.q }}">
+                        </form>
+                    </div>
+
+                    <!-- Shopping Cart -->
+                    <a href="{% url 'order-confirmation' 0 %}" class="nav-icon-btn relative">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                        <span class="absolute -top-1 -right-1 bg-rose text-midnight text-[9px] font-black rounded-full w-4 h-4 flex items-center justify-center border-2 border-midnight">
+                            3
+                        </span>
+                    </a>
+
+                    <!-- User / Auth -->
+                    {% if request.user.is_authenticated %}
+                    <div class="dropdown">
+                        <a class="nav-icon-btn overflow-hidden border-rose/30" href="#" id="userNav" data-bs-toggle="dropdown">
+                            <i data-lucide="user" class="w-5 h-5"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end glass border-rose/20 mt-4 p-2 shadow-2xl rounded-2xl animate-fade-in">
+                            <li>
+                                <a class="dropdown-item rounded-xl text-sm py-2 px-4 text-white hover:bg-white/5 flex items-center" href="{% url 'account_logout' %}">
+                                    <i data-lucide="log-out" class="w-4 h-4 mr-3 text-rose"></i>Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% else %}
+                    <a href="{% url 'account_login' %}" class="nav-icon-btn" title="Login">
+                        <i data-lucide="log-in" class="w-5 h-5"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<script>
+    // Navbar scroll interaction handled by base script or specific class toggle
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('.navbar');
+        if (window.scrollY > 40) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    });
+</script>

@@ -1,0 +1,324 @@
+{% extends 'lunch_manager/base.html' %}
+
+{% block navbar_categories %}{% endblock %}
+{% block navbar_categories_mobile_content %}{% endblock %}
+
+{% block content %}
+<div class="container px-4 pt-24 lg:pt-32 pb-12">
+    <!-- Hero / Discover Section -->
+    <div class="text-center mb-16 animate-slide-up">
+        <h1 class="font-outfit text-5xl lg:text-7xl font-black mb-4 tracking-tighter uppercase whitespace-normal">
+            Delicious Meals, <br class="lg:hidden">
+            <span class="text-rose underline decoration-rose/30 underline-offset-8 italic">Zero Waste.</span>
+        </h1>
+        <p class="text-white/40 text-sm lg:text-base font-medium tracking-[0.3em] uppercase opacity-60">Rescue your next meal and save the planet</p>
+    </div>
+
+    <!-- Ultra-Compact Discovery Row -->
+    <div class="glass border-white/5 rounded-3xl p-3 lg:p-4 mb-8 shadow-2xl relative z-40">
+        <div class="flex items-center justify-between gap-3 relative z-10">
+            <!-- Left: Filters -->
+            <div class="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+                <button type="button" class="quick-filter-btn flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border border-white/10 bg-white/5 hover:bg-white/10 transition-all shrink-0" data-filter-type="stock">
+                    <i data-lucide="package" class="w-3.5 h-3.5 text-rose"></i>
+                    <span class="hidden sm:inline">In Stock</span>
+                </button>
+                <button type="button" class="quick-filter-btn flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border border-white/10 bg-white/5 hover:bg-white/10 transition-all shrink-0" data-filter-type="budget">
+                    <i data-lucide="banknote" class="w-3.5 h-3.5 text-rose"></i>
+                    <span class="hidden sm:inline">Budget</span>
+                </button>
+            </div>
+
+            <!-- Right: Custom Sort -->
+            <div class="relative">
+                <button type="button" id="sort-trigger" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-midnight border border-white/10 text-[10px] font-black uppercase tracking-widest text-white/40 hover:border-rose/30 transition-all whitespace-nowrap">
+                    <i data-lucide="arrow-up-down" class="w-3.5 h-3.5 text-rose"></i>
+                    <span class="hidden md:inline" id="active-sort-label">Sort</span>
+                </button>
+                
+                <!-- Custom Dropdown Menu -->
+                <div id="sort-dropdown" class="hidden absolute right-0 mt-3 w-48 glass border-white/10 rounded-2xl p-2 shadow-[0_20px_50px_rgba(0,0,0,0.8)] z-[110] animate-entrance">
+                    <button type="button" data-sort="default" class="sort-opt w-full text-left px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest text-white/40 hover:bg-white/5 hover:text-rose transition-all mb-1 active-sort">Recommended</button>
+                    <button type="button" data-sort="price-low" class="sort-opt w-full text-left px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest text-white/40 hover:bg-white/5 hover:text-rose transition-all mb-1">Price: Low to High</button>
+                    <button type="button" data-sort="price-high" class="sort-opt w-full text-left px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest text-white/40 hover:bg-white/5 hover:text-rose transition-all">Price: High to Low</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Compact Separator -->
+        <div class="my-3 border-t border-white/5"></div>
+
+        <!-- Pill Navigation -->
+        <div class="flex items-center gap-2 overflow-x-auto scrollbar-hide py-1">
+            <button type="button" class="category-pill active whitespace-nowrap px-4 py-1.5" data-filter="all">All</button>
+            {% for cat in categories %}
+            <button type="button" class="category-pill whitespace-nowrap px-4 py-1.5" data-filter="{{ cat.name|slugify }}">
+                {{ cat.name }}
+            </button>
+            {% endfor %}
+        </div>
+    </div>
+
+    <form method="POST">
+      {% csrf_token %}
+
+      {% if all_items %}
+      <section class="mb-24">
+        <!-- Scrollable Wrapper for Mobile -->
+        <div class="mobile-horizontal-scroll-container">
+          <div id="menu-container" class="product-grid-refined mobile-carousel">
+          {% for item in all_items %}
+          <div class="menu-item-card-wrapper transition-all duration-300 transform opacity-100 scale-100" 
+               data-categories="{% for c in item.category.all %}{{ c.name|slugify }} {% endfor %}"
+               data-price="{{ item.price }}"
+               data-stock="{{ item.stock }}">
+            <div class="card-modern group h-full flex flex-col">
+              <!-- Image Container -->
+              <div class="relative aspect-square overflow-hidden border-b border-white/5">
+                <img src="{{ item.imageURL }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="{{ item.name }}">
+                
+                <!-- Availability Badge -->
+                <div class="absolute top-3 right-3 glass border-white/5 px-2 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1.5 shadow-xl">
+                    <span class="w-1.5 h-1.5 rounded-full {% if item.stock <= 5 %}bg-rose animate-pulse{% else %}bg-green-400{% endif %}"></span>
+                    {{ item.stock }} Left
+                </div>
+              </div>
+              
+              <!-- Content -->
+              <div class="p-4 flex flex-col flex-grow">
+                <h3 class="font-outfit text-sm font-bold text-white mb-3 tracking-tight group-hover:text-rose transition-colors line-clamp-1">{{ item.name }}</h3>
+                
+                <div class="space-y-3 mb-5">
+                    <!-- Location -->
+                    <div class="flex items-center gap-2 group/loc">
+                        <div class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center border border-white/5 group-hover/loc:border-rose/30 transition-all">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-rose"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-[9px] text-white/30 font-black uppercase tracking-widest">Location</span>
+                            <span class="text-[10px] font-bold text-white/80">{{ item.store_location.name|default:"Main Store" }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Pickup Time -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center border border-white/5">
+                                <i data-lucide="clock" class="w-3.5 h-3.5 text-rose"></i>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-[9px] text-white/30 font-black uppercase tracking-widest">Collect</span>
+                                <span class="text-[10px] font-bold text-white/80">{{ item.collect_time_start }} - {{ item.collect_time_end }}</span>
+                            </div>
+                        </div>
+                        <!-- Day Pill -->
+                        <span class="px-2 py-0.5 rounded-full bg-rose/10 border border-rose/20 text-rose text-[9px] font-black uppercase tracking-tighter">
+                            {{ item.collect_day }}
+                        </span>
+                    </div>
+
+                    <!-- Price Row -->
+                    <div class="pt-2 border-t border-white/5 flex items-center justify-between">
+                        <span class="text-[9px] text-white/30 font-black uppercase tracking-widest">Price</span>
+                        <span class="font-outfit font-extrabold text-rose text-base">{{ item.price }} <span class="text-[10px] opacity-60 uppercase">kr</span></span>
+                    </div>
+                </div>
+                
+                <!-- Action -->
+                <button type="submit" name="items[]" value="{{ item.pk }}" 
+                        class="btn-modern w-full text-xs font-bold {% if item.is_out_of_stock %}pointer-events-none opacity-30 grayscale{% endif %}"
+                        {% if item.is_out_of_stock %}disabled{% endif %}>
+                  Reserve Now
+                </button>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        </div> <!-- end mobile-horizontal-scroll-container -->
+      </section>
+      {% endif %}
+    </form>
+</div>
+
+<style>
+    .filter-btn.active {
+        background: var(--rose) !important;
+        color: var(--midnight) !important;
+        box-shadow: 0 4px 15px rgba(236, 197, 198, 0.3);
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.category-pill');
+    const quickFilterBtns = document.querySelectorAll('.quick-filter-btn');
+    const itemsContainer = document.getElementById('menu-container');
+    const items = Array.from(document.querySelectorAll('.menu-item-card-wrapper'));
+
+    // Custom Sort Logic
+    const sortTrigger = document.getElementById('sort-trigger');
+    const sortDropdown = document.getElementById('sort-dropdown');
+    const sortOptions = document.querySelectorAll('.sort-opt');
+    const activeSortLabel = document.getElementById('active-sort-label');
+    let currentSort = 'default';
+
+    sortTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        sortDropdown.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', () => {
+        sortDropdown.classList.add('hidden');
+    });
+
+    sortOptions.forEach(opt => {
+        opt.addEventListener('click', () => {
+            sortOptions.forEach(o => o.classList.remove('active-sort'));
+            opt.classList.add('active-sort');
+            currentSort = opt.getAttribute('data-sort');
+            activeSortLabel.textContent = opt.textContent;
+            sortDropdown.classList.add('hidden');
+            applyFiltersAndSort();
+        });
+    });
+
+    let activeCategory = 'all';
+    let activeQuickFilters = {
+        stock: false,
+        budget: false
+    };
+
+    function applyFiltersAndSort() {
+        // 1. Filtering Logic
+        items.forEach(item => {
+            const categoriesContent = item.getAttribute('data-categories') || '';
+            const categories = categoriesContent.trim().split(/\s+/);
+            const stock = parseInt(item.getAttribute('data-stock') || '0');
+            const price = parseFloat(item.getAttribute('data-price') || '0');
+            
+            let visible = (activeCategory === 'all' || categories.includes(activeCategory));
+            
+            if (activeQuickFilters.stock && stock <= 0) visible = false;
+            if (activeQuickFilters.budget && price >= 100) visible = false;
+
+            if (visible) {
+                item.classList.remove('hidden');
+                setTimeout(() => {
+                    item.classList.add('opacity-100', 'scale-100');
+                    item.classList.remove('opacity-0', 'scale-95');
+                }, 50);
+            } else {
+                item.classList.remove('opacity-100', 'scale-100');
+                item.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => {
+                    item.classList.add('hidden');
+                }, 300);
+            }
+        });
+
+        // 2. Sorting Logic
+        if (currentSort === 'default') return;
+
+        const sortedItems = [...items].sort((a, b) => {
+            const priceA = parseFloat(a.getAttribute('data-price') || '0');
+            const priceB = parseFloat(b.getAttribute('data-price') || '0');
+            
+            if (currentSort === 'price-low') return priceA - priceB;
+            if (currentSort === 'price-high') return priceB - priceA;
+            return 0;
+        });
+
+        sortedItems.forEach(item => itemsContainer.appendChild(item));
+    }
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeCategory = btn.getAttribute('data-filter');
+            applyFiltersAndSort();
+        });
+    });
+
+    quickFilterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const type = btn.getAttribute('data-filter-type');
+            activeQuickFilters[type] = !activeQuickFilters[type];
+            btn.classList.toggle('active-quick-filter');
+            applyFiltersAndSort();
+        });
+    });
+
+    sortControl.addEventListener('change', applyFiltersAndSort);
+
+    // AJAX Add to Cart Logic
+    const cartBadge = document.getElementById('cart-badge');
+    
+    document.querySelectorAll('.reserve-now-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const form = btn.closest('form');
+            const itemId = form.querySelector('input[name="items[]"]').value;
+            const originalText = btn.innerHTML;
+            
+            // Visual Feedback: Loading
+            btn.disabled = true;
+            btn.classList.add('opacity-80');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm mr-2"></span>Adding...';
+            
+            try {
+                const formData = new FormData();
+                formData.append('items[]', itemId);
+                
+                const response = await fetch(window.location.href, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Update Badge
+                    if (cartBadge) {
+                        cartBadge.innerText = data.cart_count;
+                        cartBadge.classList.remove('hidden');
+                        cartBadge.classList.add('animate-bounce');
+                        setTimeout(() => cartBadge.classList.remove('animate-bounce'), 1000);
+                    }
+                    
+                    // Success Animation
+                    btn.classList.remove('bg-rose', 'text-midnight');
+                    btn.classList.add('bg-green-500/20', 'text-green-400', 'border-green-500/50');
+                    btn.innerHTML = '<i data-lucide="check" class="w-4 h-4 mr-2"></i>Added!';
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
+                    
+                    setTimeout(() => {
+                        btn.disabled = false;
+                        btn.classList.remove('opacity-80', 'bg-green-500/20', 'text-green-400', 'border-green-500/50');
+                        btn.classList.add('bg-rose', 'text-midnight');
+                        btn.innerHTML = originalText;
+                        if (typeof lucide !== 'undefined') lucide.createIcons();
+                    }, 2000);
+                }
+            } catch (err) {
+                console.error('Cart Error:', err);
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        });
+    });
+
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+});
+</script>
+
+{% endblock content %}
+
+

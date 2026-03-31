@@ -1,0 +1,74 @@
+{% extends 'lunch_manager/base.html' %}
+{% block footer %}{% endblock %}
+
+{% block content %}
+<div class="flex flex-col items-center justify-start pt-24 pb-12 min-h-screen px-4 animate-entrance">
+    <div class="max-w-[340px] w-full card-modern glass p-6 text-center relative overflow-hidden bg-midnight-light/40 border-rose/20 shadow-2xl">
+        <!-- Background Glow -->
+        <div class="absolute -top-16 -left-16 w-32 h-32 bg-rose/5 blur-[60px] rounded-full pointer-events-none"></div>
+
+        <!-- Success Animation Icon -->
+        <div class="mb-6 relative inline-block">
+            <div class="absolute inset-0 bg-rose/20 blur-xl rounded-full scale-125 animate-pulse"></div>
+            <div class="relative w-16 h-16 rounded-full bg-rose/10 border-2 border-rose/30 flex items-center justify-center mx-auto shadow-inner">
+                <i data-lucide="check" class="w-8 h-8 text-rose stroke-[3]"></i>
+            </div>
+        </div>
+
+        <h1 class="font-outfit text-2xl lg:text-3xl font-black text-white mb-2 tracking-tighter uppercase leading-tight">Payment Successful!</h1>
+        <p class="text-white/40 text-xs max-w-[240px] mx-auto mb-6 font-medium leading-relaxed">Your order has been confirmed and is now being rescued from waste.</p>
+        
+        <div class="inline-flex items-center bg-white/5 border border-white/10 px-5 py-1.5 rounded-full mb-8 group hover:border-rose/30 transition-all">
+            <span class="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] mr-2">ID</span>
+            <span class="font-outfit font-black text-rose text-sm tracking-widest">#{{ pk }}</span>
+        </div>
+
+        <!-- Extra-Compact Info List -->
+        <div class="flex flex-col gap-2.5 text-left mb-8">
+            <div class="glass border-white/5 p-3 rounded-xl group hover:bg-white/[0.02] transition-all">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="package" class="w-4 h-4 text-rose"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-white font-bold text-[11px] mb-0">Sustainable Pickup</h6>
+                        <p class="text-[9px] text-white/30 leading-tight">Bring your own reusable bag.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="https://www.google.com/maps/search/?api=1&query={{ order.order_items.first.item.store_location.address|urlencode }}+{{ order.order_items.first.item.store_location.city|urlencode }}" 
+               target="_blank"
+               class="glass border-white/5 p-3 rounded-xl group hover:bg-rose/5 hover:border-rose/20 transition-all no-underline">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0 group-hover:bg-rose/10 transition-colors">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-rose"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-white font-bold text-[11px] mb-0">Get Directions</h6>
+                            <p class="text-[9px] text-white/30 leading-tight">{{ order.order_items.first.item.store_location.address|default:"Norrtullsgatan 4" }}</p>
+                        </div>
+                    </div>
+                    <i data-lucide="external-link" class="w-3 h-3 text-white/20 group-hover:text-rose transition-colors"></i>
+                </div>
+            </a>
+        </div>
+
+        <div class="pt-6 border-t border-white/5">
+            <a href="{% url 'order' %}" class="btn-modern w-full py-3 no-underline group text-[11px]">
+                <span class="flex items-center justify-center gap-2">
+                    <i data-lucide="home" class="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform"></i>
+                    <span class="font-black uppercase tracking-wider">Back to Restaurant</span>
+                </span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+</script>
+{% endblock content %}

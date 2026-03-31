@@ -1,0 +1,362 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!-- <![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Leftover Lunch</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="//cloudulu.com/wp-content/uploads/2023/10/favicon.svg" type="image/x-icon">
+
+        <!-- Fonts: Inter & Outfit -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+        
+        <!-- Tailwind CSS (Play CDN) -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+              theme: {
+                extend: {
+                  colors: {
+                    rose: '#ECC5C6',
+                    midnight: '#0D0D0E',
+                    muted: '#1A1B1E',
+                    accent: '#ECC5C6',
+                    'accent-blue': '#8A9DB1',
+                  },
+                  fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                    outfit: ['Outfit', 'sans-serif'],
+                  }
+                }
+              }
+            }
+        </script>
+
+        <!-- Lucide Icons -->
+        <script src="https://unpkg.com/lucide@latest"></script>
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        
+        <!-- Modern Custom Styles -->
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/modern.css' %}">
+        <style>
+            /* Critical Modal Styles */
+            .explainer-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(13, 13, 14, 0.85);
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                z-index: 10000; /* Super high z-index */
+                display: none;
+                align-items: center;
+                justify-content: center;
+                padding: 1.5rem;
+                opacity: 0;
+                transition: opacity 0.5s ease;
+            }
+
+            .explainer-overlay.active {
+                display: flex !important;
+                opacity: 1;
+            }
+
+            .explainer-modal-card {
+                background: #1A1B1E;
+                border: 1px solid rgba(236, 197, 198, 0.15);
+                border-radius: 2.5rem;
+                width: 100%;
+                max-width: 420px;
+                max-height: 90vh;
+                overflow-y: auto;
+                position: relative;
+                transform: translateY(30px);
+                transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+                box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+                scrollbar-width: none;
+            }
+
+            .explainer-overlay.active .explainer-modal-card {
+                transform: translateY(0);
+            }
+
+            .explainer-step-img {
+                width: 100%;
+                aspect-ratio: 16/9;
+                object-fit: cover;
+                border-radius: 1.5rem;
+                margin-bottom: 1rem;
+                border: 1px solid rgba(255,255,255,0.05);
+            }
+
+            .explainer-number {
+                width: 32px;
+                height: 32px;
+                background: #ECC5C6;
+                color: #0D0D0E;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+                font-weight: 900;
+                position: absolute;
+                top: -10px;
+                left: -10px;
+                z-index: 5;
+            }
+
+            .close-explainer {
+                position: absolute;
+                top: 1.5rem;
+                right: 1.5rem;
+                width: 36px;
+                height: 36px;
+                background: rgba(236, 197, 198, 0.1); /* Subtle rose background */
+                border: 1px solid rgba(236, 197, 198, 0.2);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #ECC5C6; /* Rose color for the X */
+                cursor: pointer;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 10;
+            }
+
+            .close-explainer:hover {
+                background: #ECC5C6;
+                color: #0D0D0E;
+                transform: rotate(90deg) scale(1.1);
+                box-shadow: 0 0 20px rgba(236, 197, 198, 0.4);
+            }
+        </style>
+    </head>
+    <body class="antialiased bg-midnight text-white font-sans">
+    <nav class="navbar navbar-expand-lg navbar-modern z-50">
+        <div class="container px-2 lg:px-4">
+            <div class="navbar-container-modern shadow-2xl flex items-center justify-between w-full px-4 lg:px-6">
+                <!-- Left: Brand (Redesigned with SVG) -->
+                <div class="flex items-center">
+                    <a class="navbar-brand flex items-center no-underline hover:opacity-80 transition-all group" href="{% url 'index' %}">
+                        <div class="relative flex items-center justify-center mr-2">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-rose group-hover:rotate-12 transition-transform duration-500">
+                                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2.5"/>
+                                <path d="M19 5L5 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                <path d="M12 8V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <span class="font-outfit font-black text-rose text-base lg:text-xl tracking-tighter uppercase mb-0 flex items-center">
+                            LEFT<span class="text-white/90">Ø</span>VERS
+                        </span>
+                    </a>
+                </div>
+
+                <!-- How it works (Desktop) -->
+                <div class="hidden lg:flex ml-6">
+                    <button onclick="toggleExplainer()" class="text-[11px] text-white/40 hover:text-white/80 transition-colors duration-200 tracking-wide flex items-center gap-1.5 bg-transparent border-none p-0 cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        How it works
+                    </button>
+                </div>
+
+                <!-- Middle: Categories (Desktop Only) -->
+                <div class="category-nav-integrated hidden lg:flex items-center gap-2">
+                    {% block navbar_categories %}{% endblock %}
+                </div>
+
+                <!-- Right: Action Group -->
+                <div class="flex items-center gap-3 lg:gap-5">
+                    <!-- Search (Desktop) -->
+                    <div class="hidden xl:flex items-center bg-white/5 border border-white/10 rounded-full px-3 py-1.5 focus-within:border-rose/50 transition-all group">
+                        <i data-lucide="search" class="w-3.5 h-3.5 text-rose/50 group-focus-within:text-rose mr-2"></i>
+                        <form method="GET" action="{% url 'order' %}">
+                            <input class="bg-transparent border-none text-white text-[11px] w-20 lg:w-28 outline-none placeholder-white/20" name="q" type="text" placeholder="Search..." value="{{ request.GET.q }}">
+                        </form>
+                    </div>
+
+                    <!-- Cart & User (Always Visible) -->
+                    <div class="flex items-center gap-2 lg:gap-4">
+                        <!-- Shopping Cart -->
+                        <a href="{% url 'order-confirmation' 0 %}" class="nav-icon-btn relative no-underline">
+                            <i data-lucide="shopping-cart" class="w-[18px] h-[18px] lg:w-5 lg:h-5"></i>
+                            <span id="cart-badge" class="absolute -top-1 -right-1 bg-rose text-midnight text-[8px] font-black rounded-full w-3.5 h-3.5 flex items-center justify-center border border-midnight {% if not cart_count %}hidden{% endif %}">
+                                {{ cart_count|default:0 }}
+                            </span>
+                        </a>
+
+                        <!-- User / Auth -->
+                        {% if request.user.is_authenticated %}
+                        <div class="dropdown">
+                            <a class="nav-icon-btn overflow-hidden border-rose/30" href="#" id="userNav" data-bs-toggle="dropdown">
+                                <i data-lucide="user" class="w-[18px] h-[18px] lg:w-5 lg:h-5"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end glass border-rose/20 mt-4 p-2 shadow-2xl rounded-2xl animate-fade-in">
+                                <li>
+                                    <a class="dropdown-item rounded-xl text-sm py-2 px-4 text-white hover:bg-white/5 flex items-center" href="{% url 'account_logout' %}">
+                                        <i data-lucide="log-out" class="w-4 h-4 mr-3 text-rose"></i>Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        {% else %}
+                        <a href="{% url 'account_login' %}" class="nav-icon-btn no-underline" title="Login">
+                            <i data-lucide="log-in" class="w-[18px] h-[18px] lg:w-5 lg:h-5"></i>
+                        </a>
+                        {% endif %}
+
+                        <!-- Mobile How It Works -->
+                        <button onclick="toggleExplainer()" class="lg:hidden nav-icon-btn border-0 p-1 text-white/40 hover:text-white transition-colors" type="button">
+                            <i data-lucide="help-circle" class="w-5 h-5"></i>
+                        </button>
+
+                        <!-- Mobile More Toggler (Hide on Desktop) -->
+                        <button onclick="toggleMobileSearch()" class="lg:hidden border-0 p-1 text-white/40 hover:text-white transition-colors flex items-center justify-center outline-none" type="button">
+                            <i data-lucide="more-vertical" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Search Container (Hide on Desktop) -->
+            <div id="mobileSearchContainer" class="lg:hidden hidden opacity-0 transition-all duration-300 transform -translate-y-2">
+                <div class="glass border-rose/10 mt-2 rounded-2xl p-3 shadow-2xl relative z-[60]">
+                    <form method="GET" action="{% url 'order' %}" class="flex items-center bg-white/5 border border-white/10 rounded-xl px-3 py-2 focus-within:border-rose/50 transition-all">
+                        <i data-lucide="search" class="w-4 h-4 text-rose/50 mr-2"></i>
+                        <input class="bg-transparent border-none text-white text-sm w-full outline-none placeholder-white/20" name="q" type="text" placeholder="Search for meals..." value="{{ request.GET.q }}">
+                    </form>
+                </div>
+            </div>
+
+            <script>
+                function toggleMobileSearch() {
+                    const container = document.getElementById('mobileSearchContainer');
+                    if (container.classList.contains('hidden')) {
+                        container.classList.remove('hidden');
+                        setTimeout(() => {
+                            container.classList.remove('opacity-0', '-translate-y-2');
+                            container.classList.add('opacity-100', 'translate-y-0');
+                        }, 10);
+                    } else {
+                        container.classList.remove('opacity-100', 'translate-y-0');
+                        container.classList.add('opacity-0', '-translate-y-2');
+                        setTimeout(() => container.classList.add('hidden'), 300);
+                    }
+                }
+            </script>
+
+            <!-- Mobile Category Strip (Always Visible on Order page) -->
+            <div class="lg:hidden w-full mt-3 overflow-x-auto scrollbar-hide">
+                <div class="flex items-center gap-2 pb-1">
+                    {% block navbar_categories_mobile %}{% block navbar_categories_mobile_content %}{% endblock %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+        
+        <main>
+            {% block content %}
+            {% endblock content %}
+        </main>
+
+        {% block footer %}
+        {% include 'lunch_manager/footer.html' %}
+        {% endblock footer %}
+
+        <!-- Scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script>
+
+            function toggleExplainer() {
+                const overlay = document.getElementById('explainerOverlay');
+                overlay.classList.toggle('active');
+                if (overlay.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            }
+
+            // Close on background click
+            document.getElementById('explainerOverlay').addEventListener('click', function(e) {
+                if (e.target === this) toggleExplainer();
+            });
+        </script>
+
+        <!-- Explainer Modal -->
+        <div id="explainerOverlay" class="explainer-overlay" style="display: none;">
+            <div class="explainer-modal-card p-6 lg:p-8">
+                <div class="close-explainer" onclick="toggleExplainer()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </div>
+
+                <div class="text-center mb-8">
+                    <h2 class="font-outfit font-black text-3xl lg:text-4xl text-white tracking-tighter leading-tight mb-2">
+                        How does <br><span class="text-rose">Leftovers</span> work?
+                    </h2>
+                    <div class="flex justify-center mt-4">
+                        <div class="w-12 h-1 bg-rose/30 rounded-full"></div>
+                    </div>
+                </div>
+
+                <div class="space-y-12">
+                    <!-- Step 1 -->
+                    <div class="relative">
+                        <div class="explainer-number">1</div>
+                        <img src="/media/explainer/step_1.png" class="explainer-step-img" alt="Explore">
+                        <h4 class="font-outfit font-bold text-lg text-white mb-2">Explore the app</h4>
+                        <p class="text-white/40 text-sm leading-relaxed">With Leftovers app you can save leftovers from your favourite restaurants, cafes</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="relative">
+                        <div class="explainer-number">2</div>
+                        <img src="/media/explainer/step_2.png" class="explainer-step-img" alt="Find">
+                        <h4 class="font-outfit font-bold text-lg text-white mb-2">Find your favourite</h4>
+                        <p class="text-white/40 text-sm leading-relaxed">Instead of throwing away perfectly good food at the end of the day, these restaurants offer whatever they have left as a lunch just for you the day after.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="relative">
+                        <div class="explainer-number">3</div>
+                        <img src="/media/explainer/step_3.png" class="explainer-step-img" alt="Reserve">
+                        <h4 class="font-outfit font-bold text-lg text-white mb-2">Reserve your food</h4>
+                        <p class="text-white/40 text-sm leading-relaxed">Find what you want to eat near you, reserve it through the app, and turn up at the store within the collection given time.</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="relative">
+                        <div class="explainer-number">4</div>
+                        <img src="/media/explainer/step_4.png" class="explainer-step-img" alt="Collect">
+                        <h4 class="font-outfit font-bold text-lg text-white mb-2">Collect your food</h4>
+                        <p class="text-white/40 text-sm leading-relaxed">When you arrive at the restaurant, show the staff your order number in the app, collect your meal and celebrate the impact you have made! <i data-lucide="leaf" class="w-3.5 h-3.5 inline text-rose"></i></p>
+                    </div>
+                </div>
+
+                <div class="mt-12 pt-8 border-t border-white/5">
+                    <a href="{% url 'order' %}" class="btn-modern w-full no-underline" onclick="toggleExplainer()">
+                        <span class="flex items-center gap-2">
+                            <i data-lucide="search" class="w-4 h-4"></i>
+                            <span class="font-black uppercase tracking-wider">Find a meal</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <script>
+            // Initialize All Icons (including modal)
+            lucide.createIcons();
+        </script>
+    </body>
+</html>
