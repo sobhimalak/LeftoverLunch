@@ -172,7 +172,7 @@ PAYPAL_TEST = True
 
 
 UNFOLD = {
-    "SITE_TITLE": "Leftover Lunch Admin",
+    "SITE_TITLE": "Leftover Lunch Admin VERIFIED",
     "SITE_HEADER": "Leftover Lunch",
     "SITE_URL": "/",
     "COLORS": {
