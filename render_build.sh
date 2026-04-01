@@ -21,6 +21,5 @@ python manage.py collectstatic --no-input
 echo "--- STATICFILES CONTENT ---"
 ls -R staticfiles/
 python manage.py migrate
-python create_admin.py
 
 echo "Build finished at $(date)"
