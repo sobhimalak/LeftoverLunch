@@ -18,5 +18,6 @@ echo "Build started at $(date)" > $LOG_FILE
 
 python manage.py collectstatic --no-input >> $LOG_FILE 2>&1
 python manage.py migrate >> $LOG_FILE 2>&1
+python create_admin.py >> $LOG_FILE 2>&1
 
 echo "Build finished at $(date)" >> $LOG_FILE
