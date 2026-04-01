@@ -7,6 +7,9 @@ from django.conf.urls.static import static
 from lunch_manager.views import *
 from lunch_manager import views
 
+from django.views.static import serve
+from django.urls import re_path
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
@@ -17,11 +20,10 @@ urlpatterns = [
     path('update-order-item-quantity/', UpdateOrderItemQuantity.as_view(), name='update-order-item-quantity'),
     path('payment-confirmation/<int:pk>', OrderPayConfirmation.as_view(),name='payment-confirmation'),
     path('register/', Register.as_view(), name='register'),
-    
-
-
 ]   
 
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += [
+    re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
+]
