@@ -14,12 +14,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-z7^4y*w=4gvq!@km9qg++pwd$rb)8o$gi40%72nh5i88*8bz&5')
 
-DEBUG = True
+IS_RENDER = os.environ.get('RENDER', 'False') == 'True'
+DEBUG = not IS_RENDER
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 render_external_hostname = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if render_external_hostname:
     ALLOWED_HOSTS.append(render_external_hostname)
+elif IS_RENDER:
+    ALLOWED_HOSTS.append('*')
 
 
 # Application definition
