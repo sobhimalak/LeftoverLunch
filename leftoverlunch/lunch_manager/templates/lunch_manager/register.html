@@ -1,0 +1,79 @@
+{% extends "lunch_manager/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container py-24">
+    <div class="row justify-content-center">
+        <div class="col-md-6 lg:col-md-5">
+            <div class="glass border-rose/10 p-8 lg:p-12 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
+                <!-- Background Glow -->
+                <div class="absolute -top-24 -right-24 w-48 h-48 bg-rose/10 blur-[100px] rounded-full group-hover:bg-rose/20 transition-all duration-700"></div>
+                
+                <div class="relative z-10">
+                    <div class="text-center mb-10">
+                        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-rose/10 border border-rose/20 mb-6 group-hover:scale-110 transition-transform duration-500">
+                            <i data-lucide="user-plus" class="w-8 h-8 text-rose"></i>
+                        </div>
+                        <h2 class="font-outfit font-black text-4xl text-white tracking-tighter uppercase mb-2">Join Leftovers</h2>
+                        <p class="text-white/40 text-sm">Create an account to start saving meals</p>
+                    </div>
+
+                    <form method="post" action="{% url 'account_signup' %}" class="space-y-6">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        
+                        <button type="submit" class="btn-modern w-full group/btn">
+                            <span class="flex items-center justify-center gap-2">
+                                <span class="font-black uppercase tracking-wider">Create Account</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
+                            </span>
+                        </button>
+                    </form>
+
+                    <div class="mt-8 pt-8 border-t border-white/5 text-center">
+                        <p class="text-white/40 text-sm">
+                            Already have an account? 
+                            <a href="{% url 'account_login' %}" class="text-rose hover:text-white transition-colors font-bold no-underline ml-1">Login here</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Styling for crispy forms to match the dark theme */
+    .form-control {
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(236, 197, 198, 0.1) !important;
+        color: white !important;
+        border-radius: 1rem !important;
+        padding: 0.75rem 1.25rem !important;
+        font-size: 0.875rem !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .form-control:focus {
+        background: rgba(255, 255, 255, 0.06) !important;
+        border-color: rgba(236, 197, 198, 0.5) !important;
+        box-shadow: 0 0 0 4px rgba(236, 197, 198, 0.1) !important;
+        outline: none !important;
+    }
+    
+    .form-label {
+        color: rgba(255, 255, 255, 0.6) !important;
+        font-size: 0.75rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .invalid-feedback {
+        color: #ff6b6b !important;
+        font-size: 0.75rem !important;
+        margin-top: 0.5rem !important;
+    }
+</style>
+{% endblock %}

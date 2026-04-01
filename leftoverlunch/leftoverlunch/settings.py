@@ -17,12 +17,26 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-z7^4y*w=4gvq!@km9qg++
 IS_RENDER = os.environ.get('RENDER', 'False') == 'True'
 DEBUG = not IS_RENDER
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'leftovers-2026.onrender.com']
 render_external_hostname = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+
 if render_external_hostname:
     ALLOWED_HOSTS.append(render_external_hostname)
 elif IS_RENDER:
     ALLOWED_HOSTS.append('*')
+
+if IS_RENDER:
+    CSRF_TRUSTED_ORIGINS = [
+        'https://leftovers-2026.onrender.com',
+        f'https://{render_external_hostname}' if render_external_hostname else None
+    ]
+    CSRF_TRUSTED_ORIGINS = [origin for origin in CSRF_TRUSTED_ORIGINS if origin]
+    
+    # Secure Cookie Settings
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # Application definition
