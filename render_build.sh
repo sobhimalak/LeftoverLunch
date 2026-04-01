@@ -12,11 +12,14 @@ if [ -d "leftoverlunch" ] && [ -f "leftoverlunch/manage.py" ]; then
     cd leftoverlunch
 fi
 
-# Redirect all output to a log file
-LOG_FILE="static/build_log.txt"
+# Ensure staticfiles exists
+mkdir -p staticfiles
+LOG_FILE="staticfiles/build_log.txt"
 echo "Build started at $(date)" > $LOG_FILE
 
 python manage.py collectstatic --no-input >> $LOG_FILE 2>&1
+echo "--- STATICFILES CONTENT ---" >> $LOG_FILE
+ls -R staticfiles/ >> $LOG_FILE 2>&1
 python manage.py migrate >> $LOG_FILE 2>&1
 python create_admin.py >> $LOG_FILE 2>&1
 
